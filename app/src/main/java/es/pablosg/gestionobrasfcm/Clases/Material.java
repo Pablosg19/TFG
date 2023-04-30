@@ -38,9 +38,7 @@ public class Material implements Serializable {
     public String getABREVIATURA_UNIDAD_MEDIDA() {
         return ABREVIATURA_UNIDAD_MEDIDA;
     }
-    public void setABREVIATURA_UNIDAD_MEDIDA(String ABREVIATURA_UNIDAD_MEDIDA) {
-        this.ABREVIATURA_UNIDAD_MEDIDA = ABREVIATURA_UNIDAD_MEDIDA;
-    }
+    public void setABREVIATURA_UNIDAD_MEDIDA(String ABREVIATURA_UNIDAD_MEDIDA) { this.ABREVIATURA_UNIDAD_MEDIDA = ABREVIATURA_UNIDAD_MEDIDA; }
 
     @Override
     public boolean equals(Object o) {
