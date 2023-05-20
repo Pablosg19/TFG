@@ -65,8 +65,8 @@ public class FinanzaObraCtrl {
         }
     }
 
-    public static boolean deleteFinanzaObra(int ID_FINANZA_OBRA){
-        FutureTask tarea = new FutureTask(new TareaDeleteFinanzaObra(ID_FINANZA_OBRA));
+    public static boolean deleteFinanzaObra(String OBRA){
+        FutureTask tarea = new FutureTask(new TareaDeleteFinanzaObra(OBRA));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
         boolean deleteFinanzaObraOK = false;
@@ -91,8 +91,8 @@ public class FinanzaObraCtrl {
         }
     }
 
-    public static boolean updateFinanzaObra(FinanzaObra fo, int ID_FINANZA_OBRA){
-        FutureTask tarea = new FutureTask(new TareaUpdateFinanzaObra(fo, ID_FINANZA_OBRA));
+    public static boolean updateFinanzaObra(FinanzaObra fo, String OBRA){
+        FutureTask tarea = new FutureTask(new TareaUpdateFinanzaObra(fo,OBRA));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
         boolean updateFinanzaObraOK = false;

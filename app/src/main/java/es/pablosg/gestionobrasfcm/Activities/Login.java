@@ -4,16 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
+import es.pablosg.gestionobrasfcm.Activities.Finanzas.FinanzasActivity;
+import es.pablosg.gestionobrasfcm.Activities.Obras.ObrasActivity;
 import es.pablosg.gestionobrasfcm.Clases.Usuario;
 import es.pablosg.gestionobrasfcm.Controladores.UsuarioCtrl;
 import es.pablosg.gestionobrasfcm.R;
@@ -21,10 +19,13 @@ import es.pablosg.gestionobrasfcm.R;
 public class Login extends AppCompatActivity {
 
     public static final String USUARIO_INTRODUCIDO = "espablosggestionobrasfcmusuariointroducido";
+    public static final String CARGO_USUARIO = "espablosggestionobrasfcmcargousuario";
+
 
     private EditText edtUser;
     private EditText edtPassword;
     private TextView errorLogin;
+    private String CARGO;
 
     ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
@@ -60,8 +61,17 @@ public class Login extends AppCompatActivity {
         for (Usuario user : usuarios) {
             if (usuario.equals(user.getUSER()) && contraseña.equals(user.getPASSWORD())){
                 errorLogin.setVisibility(View.INVISIBLE);
-                Intent intent = new Intent(this, PrincipalActivity.class);
-                intent.putExtra(USUARIO_INTRODUCIDO,user.getUSER());
+                CARGO = user.getCARGO();
+                Intent intent;
+                if (CARGO.equalsIgnoreCase("Administrativo")){
+                    intent = new Intent(this, FinanzasActivity.class);
+                }
+                else{
+                    intent = new Intent(this, ObrasActivity.class);
+                }
+
+                intent.putExtra(USUARIO_INTRODUCIDO,user.getNOMBRE());
+                intent.putExtra(CARGO_USUARIO, CARGO);
                 startActivity(intent);
                 return;
             }

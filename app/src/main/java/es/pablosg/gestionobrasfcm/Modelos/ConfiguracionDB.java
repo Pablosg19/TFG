@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ConfiguracionDB {
     public static final String HOSTDB = "10.0.2.2";
-    public static final String NOMBREDB = "tfg_fcm";
+    public static final String NOMBREDB = "tfg_fcm2";
     public static final String USUARIODB = "root";
     public static final String CLAVEDB = "Psg_1910";
     private static final String OPCIONESHORA = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";

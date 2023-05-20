@@ -36,20 +36,10 @@ public class ObraDB {
                 String OBRA = resultado.getString("OBRA");
                 String DIRECCION = resultado.getString("DIRECCION");
                 String LOCALIZACION = resultado.getString("LOCALIZACION");
-                int NUM_VIVIENDAS = resultado.getInt("NUM_VIVIENDAS");
+                double PRECIO_TERRENO = resultado.getDouble("PRECIO_TERRENO");
                 boolean TERMINAR = resultado.getBoolean("TERMINAR");
-                Blob PLANO = resultado.getBlob("PLANO");
-                Bitmap bm_PLANO;
-                Obra o;
-                if(PLANO != null){
-                    byte[] bfoto = ImagenesBlobBitmap.blob_to_bytes(PLANO);
-                    bm_PLANO = ImagenesBlobBitmap.decodeSampledBitmapFrombyteArray(bfoto, ConfiguracionDB.ANCHO_IMAGENES_BITMAP, ConfiguracionDB.ALTO_IMAGENES_BITMAP);
-                    o = new Obra(ID_OBRA, OBRA, DIRECCION, LOCALIZACION, NUM_VIVIENDAS, TERMINAR, bm_PLANO);
-                }
-                else{
-                    o = new Obra(ID_OBRA, OBRA, DIRECCION, LOCALIZACION, NUM_VIVIENDAS, TERMINAR,null);
-
-                }
+                boolean VENDIDA = resultado.getBoolean("VENDIDA");
+                Obra o = new Obra(ID_OBRA, OBRA, DIRECCION, LOCALIZACION, PRECIO_TERRENO, TERMINAR, VENDIDA);
                 obras.add(o);
             }
             resultado.close();
@@ -71,19 +61,12 @@ public class ObraDB {
             return false;
         }
         try{
-            String ordenSQL = "INSERT INTO obras (ID_OBRA, OBRA, DIRECCION, LOCALIZACION, NUM_VIVIENDAS, TERMINAR, PLANO) VALUES('0',?,?,?,?,0,?);";
+            String ordenSQL = "INSERT INTO obras (ID_OBRA, OBRA, DIRECCION, LOCALIZACION, PRECIO_TERRENO, TERMINAR, VENDIDA) VALUES(0,?,?,?,?,0,0);";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,o.getOBRA());
             sentencia.setString(2,o.getDIRECCION());
             sentencia.setString(3,o.getLOCALIZACION());
-            sentencia.setInt(4,o.getNUM_VIVIENDAS());
-            if (o.getPLANO() != null){
-                byte[] bl1 = ImagenesBlobBitmap.bitmap_to_bytes_png(o.getPLANO());
-                sentencia.setBytes(5,bl1);
-            }
-            else{
-                sentencia.setBytes(5, null);
-            }
+            sentencia.setDouble(4,o.getPRECIO_TERRENO());
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -133,18 +116,15 @@ public class ObraDB {
             return false;
         }
         try {
-            String ordenSQL = "UPDATE obras SET OBRA = ?, DIRECCION = ?, LOCALIZACION = ?, NUM_VIVIENDA = ?, TERMINAR = ?, PLANO = ? WHERE ID_OBRA = ?;";
+            String ordenSQL = "UPDATE obras SET OBRA = ?, DIRECCION = ?, LOCALIZACION = ?, PRECIO_TERRENO = ?, TERMINAR = ?, VENDIDA = ? WHERE ID_OBRA = ?;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,o.getOBRA());
             sentencia.setString(2,o.getDIRECCION());
             sentencia.setString(3,o.getLOCALIZACION());
-            sentencia.setInt(4,o.getNUM_VIVIENDAS());
+            sentencia.setDouble(4,o.getPRECIO_TERRENO());
             sentencia.setBoolean(5, o.isTERMINAR());
-            if (o.getPLANO() != null){
-                byte[] bl1 = ImagenesBlobBitmap.bitmap_to_bytes_png(o.getPLANO());
-                sentencia.setBytes(6,bl1);
-            }
-            sentencia.setString(7, ID_OBRA);
+            sentencia.setBoolean(6, o.isVENDIDA());
+            sentencia.setString(8, ID_OBRA);
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -159,28 +139,22 @@ public class ObraDB {
         }
     }
 
-    public static ArrayList<Obra> getObrasFiltro(String filtro){
+    public static ArrayList<Obra> getObrasFiltro(String filtroObra, String filtroLocalizacion){
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null)
         {
             Log.i("sql","no conecta la base de datos");
             return null;
         }
-        if (filtro == null){
-            Log.i("filtro","nulo");
-        }
-        else{
-            Log.i("filtro", filtro);
-        }
         ArrayList<Obra> obras = new ArrayList<Obra>();
         try
         {
-            Log.i("filtro",filtro);
-            filtro = "%"+filtro+"%";
-            String ordenSQL = "SELECT ID_OBRA, OBRA, DIRECCION, LOCALIZACION, NUM_VIVIENDAS, TERMINAR, PLANO FROM obras WHERE OBRA LIKE ? or LOCALIZACION LIKE ?;";
+            filtroObra = "%"+filtroObra+"%";
+            filtroLocalizacion = "%"+filtroLocalizacion+"%";
+            String ordenSQL = "SELECT ID_OBRA, OBRA, DIRECCION, LOCALIZACION, PRECIO_TERRENO, TERMINAR, VENDIDA FROM obras WHERE OBRA LIKE ? and LOCALIZACION LIKE ?;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setString(1, filtro);
-            sentencia.setString(2, filtro);
+            sentencia.setString(1, filtroObra);
+            sentencia.setString(2, filtroLocalizacion);
             ResultSet resultado = sentencia.executeQuery();
 
             while (resultado.next())
@@ -189,20 +163,10 @@ public class ObraDB {
                 String OBRA = resultado.getString("OBRA");
                 String DIRECCION = resultado.getString("DIRECCION");
                 String LOCALIZACION = resultado.getString("LOCALIZACION");
-                int NUM_VIVIENDAS = resultado.getInt("NUM_VIVIENDAS");
+                double PRECIO_TERRENO = resultado.getDouble("PRECIO_TERRENO");
                 boolean TERMINAR = resultado.getBoolean("TERMINAR");
-                Blob PLANO = resultado.getBlob("PLANO");
-                Bitmap bm_foto;
-                Obra o;
-                if(PLANO != null){
-                    byte[] bfoto = ImagenesBlobBitmap.blob_to_bytes(PLANO);
-                    bm_foto = ImagenesBlobBitmap.decodeSampledBitmapFrombyteArray(bfoto, ConfiguracionDB.ANCHO_IMAGENES_BITMAP, ConfiguracionDB.ALTO_IMAGENES_BITMAP);
-                    o = new Obra(ID_OBRA, OBRA, DIRECCION, LOCALIZACION, NUM_VIVIENDAS, TERMINAR, bm_foto);
-                }
-                else{
-                    o = new Obra(ID_OBRA, OBRA, DIRECCION, LOCALIZACION, NUM_VIVIENDAS, TERMINAR, null);
-
-                }
+                boolean VENDIDA = resultado.getBoolean("VENDIDA");
+                Obra o = new Obra(ID_OBRA, OBRA, DIRECCION, LOCALIZACION, PRECIO_TERRENO, TERMINAR, VENDIDA);
                 obras.add(o);
             }
             resultado.close();

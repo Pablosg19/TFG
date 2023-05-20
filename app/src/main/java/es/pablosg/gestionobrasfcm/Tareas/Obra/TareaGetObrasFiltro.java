@@ -8,15 +8,17 @@ import es.pablosg.gestionobrasfcm.Modelos.ObraDB;
 
 public class TareaGetObrasFiltro implements Callable<ArrayList<Obra>> {
 
-    private String filtro = null;
+    private String filtroObra = null;
+    private String filtroLocalizacion = null;
 
-    public TareaGetObrasFiltro(String filtro) {
-        this.filtro = filtro;
+    public TareaGetObrasFiltro(String filtroObra, String filtroLocalizacion) {
+        this.filtroObra = filtroObra;
+        this.filtroLocalizacion = filtroLocalizacion;
     }
 
     @Override
     public ArrayList<Obra> call() throws Exception {
-        ArrayList<Obra> obras = ObraDB.getObrasFiltro(filtro);
+        ArrayList<Obra> obras = ObraDB.getObrasFiltro(filtroObra, filtroLocalizacion);
         return obras;
     }
 }

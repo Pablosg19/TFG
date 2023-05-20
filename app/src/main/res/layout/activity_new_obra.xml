@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFE0E0"
+    tools:context=".Activities.Obras.NewObraActivity">
+
+    <TextView
+        android:id="@+id/txt_newObra_user"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="620dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="105dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_modified" />
+
+    <EditText
+        android:id="@+id/edt_newObra_Obra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:hint="@string/Obra"
+        android:inputType="textPersonName"
+        android:paddingLeft="10sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_newObra_titulo" />
+
+    <EditText
+        android:id="@+id/edt_newObra_direccion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:hint="@string/Direccion"
+        android:inputType="textPersonName"
+        android:paddingLeft="10sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_Obra" />
+
+    <EditText
+        android:id="@+id/edt_newObra_Localizacion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:hint="@string/Localizacion"
+        android:inputType="textPersonName"
+        android:paddingLeft="10sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_direccion" />
+
+    <EditText
+        android:id="@+id/edt_newObra_PrecioTerreno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:hint="@string/Precio_Terreno"
+        android:inputType="textPersonName"
+        android:paddingLeft="10sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_Localizacion" />
+
+    <Button
+        android:id="@+id/bt_newObra_anadirObra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="15dp"
+        android:backgroundTint="#4CAF50"
+        android:onClick="anadirNewObra"
+        android:text="@string/Anadir"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/bt_newObra_cancelarObra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_PrecioTerreno" />
+
+    <Button
+        android:id="@+id/bt_newObra_cancelarObra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="55dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:onClick="cancelarNewObra"
+        android:text="@string/Cancelar"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt_newObra_anadirObra"
+        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_PrecioTerreno" />
+
+    <TextView
+        android:id="@+id/txt_newObra_titulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="90dp"
+        android:gravity="center"
+        android:text="@string/nuevaObra"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

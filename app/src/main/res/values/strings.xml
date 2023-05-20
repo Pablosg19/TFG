@@ -1,6 +1,22 @@
 <resources>
-    <string name="app_name">GestionObrasFCM</string>
+    <string name="app_name">FCM</string>
     <string name="FCM">FCM</string>
     <string name="login">Entrar</string>
     <string name="errorLogin">Los datos introducidos son incorrectos</string>
+    <string name="Materiales">Materiales</string>
+    <string name="Obras">Obras</string>
+    <string name="Proveedores">Proveedores</string>
+    <string name="Finanzas">Finanzas</string>
+    <string name="Nombre">Nombre</string>
+    <!-- Strings atributos obras -->
+    <string name="Obra">Obra</string>
+    <string name="Direccion">Dirección</string>
+    <string name="Localizacion">Localización</string>
+    <string name="Precio_Terreno">Precio del terreno</string>
+    <string name="Terminar">Terminada</string>
+    <string name="Vendida">Vendida</string>
+    <string name="Plano">Añadir Plano</string>
+    <string name="Anadir">Añadir</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="nuevaObra">Nueva Obra</string>
 </resources>

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import es.pablosg.gestionobrasfcm.Activities.Login;
 import es.pablosg.gestionobrasfcm.Clases.GestionMaterial;
 import es.pablosg.gestionobrasfcm.Clases.MovimientoFinanza;
 
@@ -58,11 +59,22 @@ public class MovimientoFinanzaDB {
             return false;
         }
         try{
-            String ordenSQL = "INSERT INTO movientos_finanzas (ID_MOVIMIENTO_FINANZA, obras_ID_OBRA, MOVIMIENTO, DINERO) VALUES('0',(SELECT ID_OBRA FROM obras WHERE OBRA = ?),?,?);";
+            String ordenSQL = "SELECT ID_OBRA FROM obras WHERE OBRA = ?";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setString(1,mf.getOBRA());
-            sentencia.setInt(2,mf.getMOVIMIENTO());
-            sentencia.setDouble(3,mf.getDINERO());
+            sentencia.setString(1, mf.getOBRA());
+            ResultSet resultado = sentencia.executeQuery();
+
+            int ID_OBRA = 0;
+            while (resultado.next()) {
+                ID_OBRA = resultado.getInt("ID_OBRA");
+            }
+            resultado.close();
+            sentencia.close();
+
+            ordenSQL = "INSERT INTO movimientos_finanzas (ID_MOVIMIENTO_FINANZA, obras_ID_OBRA, MOVIMIENTO, DINERO) VALUES(0,"+ ID_OBRA +",?,?);";
+            sentencia = conexion.prepareStatement(ordenSQL);
+            sentencia.setInt(1,mf.getMOVIMIENTO());
+            sentencia.setDouble(2,mf.getDINERO());
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();

@@ -48,7 +48,7 @@ public class ObraCtrl {
             newObraOK = (boolean) tarea.get();
             es.shutdown();
             try{
-                if (!es.awaitTermination(800,TimeUnit.MILLISECONDS)){
+                if (!es.awaitTermination(1000,TimeUnit.MILLISECONDS)){
                     es.shutdownNow();
                 }
             } catch (InterruptedException e1) {
@@ -116,16 +116,16 @@ public class ObraCtrl {
         }
     }
 
-    public static ArrayList<Obra> getObrasFiltro(String filtro){
+    public static ArrayList<Obra> getObrasFiltro(String filtroObra, String filtroLocalizacion){
         ArrayList<Obra> obras = null;
-        FutureTask tarea = new FutureTask(new TareaGetObrasFiltro(filtro));
+        FutureTask tarea = new FutureTask(new TareaGetObrasFiltro(filtroObra, filtroLocalizacion));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
         try {
             obras = (ArrayList<Obra>) tarea.get();
             es.shutdown();
             try {
-                if (!es.awaitTermination(2000, TimeUnit.MILLISECONDS)){
+                if (!es.awaitTermination(1000, TimeUnit.MILLISECONDS)){
                     es.shutdownNow();
                 }
             }  catch (InterruptedException e) {

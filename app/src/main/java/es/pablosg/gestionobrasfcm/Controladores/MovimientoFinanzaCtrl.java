@@ -49,7 +49,7 @@ public class MovimientoFinanzaCtrl {
             newMovimientoFinanzaOK = (boolean) tarea.get();
             es.shutdown();
             try{
-                if (!es.awaitTermination(800,TimeUnit.MILLISECONDS)){
+                if (!es.awaitTermination(1000,TimeUnit.MILLISECONDS)){
                     es.shutdownNow();
                 }
             } catch (InterruptedException e1) {

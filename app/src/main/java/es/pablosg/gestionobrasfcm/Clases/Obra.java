@@ -14,27 +14,18 @@ public class Obra implements Parcelable {
     private String OBRA;
     private String DIRECCION;
     private String LOCALIZACION;
-    private int NUM_VIVIENDAS;
+    private double PRECIO_TERRENO;
     private boolean TERMINAR;
-    private Bitmap PLANO;
+    private boolean VENDIDA;
 
-    public Obra(int ID_OBRA, String OBRA, String DIRECCION, String LOCALIZACION, int NUM_VIVIENDAS, boolean TERMINAR) {
+    public Obra(int ID_OBRA, String OBRA, String DIRECCION, String LOCALIZACION, double PRECIO_TERRENO, boolean TERMINAR, boolean VENDIDA) {
         this.ID_OBRA = ID_OBRA;
         this.OBRA = OBRA;
         this.DIRECCION = DIRECCION;
         this.LOCALIZACION = LOCALIZACION;
-        this.NUM_VIVIENDAS = NUM_VIVIENDAS;
+        this.PRECIO_TERRENO = PRECIO_TERRENO;
         this.TERMINAR = TERMINAR;
-    }
-
-    public Obra(int ID_OBRA, String OBRA, String DIRECCION, String LOCALIZACION, int NUM_VIVIENDAS, boolean TERMINAR, Bitmap PLANO) {
-        this.ID_OBRA = ID_OBRA;
-        this.OBRA = OBRA;
-        this.DIRECCION = DIRECCION;
-        this.LOCALIZACION = LOCALIZACION;
-        this.NUM_VIVIENDAS = NUM_VIVIENDAS;
-        this.TERMINAR = TERMINAR;
-        this.PLANO = PLANO;
+        this.VENDIDA = VENDIDA;
     }
 
     public int getID_OBRA() {
@@ -61,18 +52,12 @@ public class Obra implements Parcelable {
     public void setLOCALIZACION(String LOCALIZACION) {
         this.LOCALIZACION = LOCALIZACION;
     }
-    public int getNUM_VIVIENDAS() {
-        return NUM_VIVIENDAS;
-    }
-    public void setNUM_VIVIENDAS(int NUM_VIVIENDAS) {
-        this.NUM_VIVIENDAS = NUM_VIVIENDAS;
-    }
-    public Bitmap getPLANO() {
-        return PLANO;
-    }
-    public void setPLANO(Bitmap PLANO) { this.PLANO = PLANO; }
     public boolean isTERMINAR() { return TERMINAR; }
     public void setTERMINAR(boolean TERMINAR) { this.TERMINAR = TERMINAR; }
+    public double getPRECIO_TERRENO() { return PRECIO_TERRENO; }
+    public void setPRECIO_TERRENO(double PRECIO_TERRENO) { this.PRECIO_TERRENO = PRECIO_TERRENO; }
+    public boolean isVENDIDA() { return VENDIDA; }
+    public void setVENDIDA(boolean VENDIDA) { this.VENDIDA = VENDIDA; }
 
     @Override
     public boolean equals(Object o) {
@@ -91,8 +76,9 @@ public class Obra implements Parcelable {
         OBRA = in.readString();
         DIRECCION = in.readString();
         LOCALIZACION = in.readString();
-        NUM_VIVIENDAS = in.readInt();
+        PRECIO_TERRENO = in.readDouble();
         TERMINAR = in.readBoolean();
+        VENDIDA = in.readBoolean();
     }
 
     public static final Creator<Obra> CREATOR = new Creator<Obra>() {
@@ -117,7 +103,8 @@ public class Obra implements Parcelable {
         dest.writeString(OBRA);
         dest.writeString(DIRECCION);
         dest.writeString(LOCALIZACION);
-        dest.writeInt(NUM_VIVIENDAS);
+        dest.writeDouble(PRECIO_TERRENO);
         dest.writeBoolean(TERMINAR);
+        dest.writeBoolean(VENDIDA);
     }
 }
