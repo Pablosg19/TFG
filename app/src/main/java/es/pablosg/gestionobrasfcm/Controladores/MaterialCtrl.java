@@ -116,9 +116,9 @@ public class MaterialCtrl {
         }
     }
 
-    public static ArrayList<Material> getMaterialFiltro(String filtro){
+    public static ArrayList<Material> getMaterialFiltro(String filtroMaterial, String filtroFamilia){
         ArrayList<Material> materiales = null;
-        FutureTask tarea = new FutureTask(new TareaGetMaterialesFiltro(filtro));
+        FutureTask tarea = new FutureTask(new TareaGetMaterialesFiltro(filtroMaterial, filtroFamilia));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
         try {

@@ -6,17 +6,27 @@
     <string name="Materiales">Materiales</string>
     <string name="Obras">Obras</string>
     <string name="Proveedores">Proveedores</string>
-    <string name="Finanzas">Finanzas</string>
+    <string name="Finanzas">FINANZAS</string>
     <string name="Nombre">Nombre</string>
     <!-- Strings atributos obras -->
     <string name="Obra">Obra</string>
     <string name="Direccion">Dirección</string>
     <string name="Localizacion">Localización</string>
+    <string name="ciudad">Ciudad</string>
     <string name="Precio_Terreno">Precio del terreno</string>
     <string name="Terminar">Terminada</string>
     <string name="Vendida">Vendida</string>
     <string name="Plano">Añadir Plano</string>
     <string name="Anadir">Añadir</string>
     <string name="Cancelar">Cancelar</string>
-    <string name="nuevaObra">Nueva Obra</string>
+    <string name="nuevaObra">NUEVA OBRA</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="material">Material</string>
+    <string name="unidadMedida">Unidad de medida</string>
+    <string name="abreviaturaUnidadMedida">Abreviatura Unidad de medida</string>
+    <string name="nuevoMaterial">NUEVO MATERIAL</string>
+    <string name="familia">Familia</string>
+    <string name="ordenar">Mostrar: </string>
 </resources>

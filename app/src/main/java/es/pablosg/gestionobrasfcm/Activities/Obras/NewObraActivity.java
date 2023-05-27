@@ -26,11 +26,6 @@ import es.pablosg.gestionobrasfcm.R;
 
 public class NewObraActivity extends AppCompatActivity {
 
-    private Intent intent;
-
-    private String USER;
-    private String CARGO;
-
     private EditText edt_obra;
     private EditText edt_direccion;
     private EditText edt_localizacion;
@@ -46,10 +41,6 @@ public class NewObraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_obra);
 
-        intent = getIntent();
-        USER = intent.getStringExtra(ObrasActivity.USUARIO_INTRODUCIDO);
-        CARGO = intent.getStringExtra(ObrasActivity.CARGO_USUARIO);
-
         edt_obra = (EditText) findViewById(R.id.edt_newObra_Obra);
         edt_direccion = (EditText) findViewById(R.id.edt_newObra_direccion);
         edt_localizacion = (EditText) findViewById(R.id.edt_newObra_Localizacion);
@@ -58,10 +49,7 @@ public class NewObraActivity extends AppCompatActivity {
         bt_cancelarObra = (Button) findViewById(R.id.bt_newObra_cancelarObra);
 
         txt_usuario = (TextView) findViewById(R.id.txt_newObra_user);
-        txt_usuario.setText(USER);
-    }
-
-    public void anadirPlano(View view) {
+        txt_usuario.setText(ObrasActivity.USER);
     }
 
     public void cancelarNewObra(View view) {
@@ -124,7 +112,7 @@ public class NewObraActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else {
-            Toast.makeText(this, "No se ha podido crear la obra "+ obra ,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error al crear la obra "+ obra ,Toast.LENGTH_LONG).show();
         }
     }
 

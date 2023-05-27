@@ -35,7 +35,8 @@ public class MaterialDB {
                 String MATERIAL = resultado.getString("MATERIAL");
                 String UNIDAD_MEDIDA = resultado.getString("UNIDAD_MEDIDA");
                 String ABREVIATURA_UNIDAD_MEDIDA = resultado.getString("ABREVIATURA_UNIDAD_MEDIDA");
-                Material m = new Material(ID_MATERIAL, MATERIAL, UNIDAD_MEDIDA, ABREVIATURA_UNIDAD_MEDIDA);
+                String FAMILIA = resultado.getString("FAMILIA");
+                Material m = new Material(ID_MATERIAL, MATERIAL, UNIDAD_MEDIDA, ABREVIATURA_UNIDAD_MEDIDA, FAMILIA);
                 materiales.add(m);
             }
             resultado.close();
@@ -57,11 +58,12 @@ public class MaterialDB {
             return false;
         }
         try{
-            String ordenSQL = "INSERT INTO materiales (ID_MATERIAL, MATERIAL, UNIDAD_MEDIDA, ABREVIATURA_UNIDAD_MEDIDA) VALUES('0',?,?,?);";
+            String ordenSQL = "INSERT INTO materiales (ID_MATERIAL, MATERIAL, UNIDAD_MEDIDA, ABREVIATURA_UNIDAD_MEDIDA, FAMILIA) VALUES('0',?,?,?,?);";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,m.getMATERIAL());
             sentencia.setString(2,m.getUNIDAD_MEDIDA());
             sentencia.setString(3,m.getABREVIATURA_UNIDAD_MEDIDA());
+            sentencia.setString(4,m.getFAMILIA());
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -105,18 +107,29 @@ public class MaterialDB {
         }
     }
 
-    public static boolean updateMaterial(Material m, String ID_MATERIAL){
+    public static boolean updateMaterial(Material m, String MATERIAL){
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if (conexion == null){
             return false;
         }
         try {
-            String ordenSQL = "UPDATE materiales SET MATERIAL = ?, UNIDAD_MEDIDA = ?, ABREVIATURA_UNIDAD_MEDIDA = ? WHERE ID_MATERIAL = ?;";
+            String ordenSQL = "SELECT ID_MATERIAL FROM materiales WHERE MATERIAL = ?";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
+            sentencia.setString(1, MATERIAL);
+            ResultSet resultado = sentencia.executeQuery();
+            int ID_MATERIAL = 0;
+            while (resultado.next()) {
+                ID_MATERIAL = resultado.getInt("ID_MATERIAL");
+            }
+            sentencia.close();
+            resultado.close();
+
+            ordenSQL = "UPDATE materiales SET MATERIAL = ?, UNIDAD_MEDIDA = ?, ABREVIATURA_UNIDAD_MEDIDA = ?, FAMILIA = ? WHERE ID_MATERIAL = " + ID_MATERIAL + ";";
+            sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,m.getMATERIAL());
             sentencia.setString(2,m.getUNIDAD_MEDIDA());
             sentencia.setString(3,m.getABREVIATURA_UNIDAD_MEDIDA());
-            sentencia.setString(4,ID_MATERIAL);
+            sentencia.setString(4, m.getFAMILIA());
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -131,27 +144,22 @@ public class MaterialDB {
         }
     }
 
-    public static ArrayList<Material> getMaterialesFiltro(String filtro){
+    public static ArrayList<Material> getMaterialesFiltro(String filtroMaterial, String filtroFamilia){
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null)
         {
             Log.i("sql","no conecta la base de datos");
             return null;
         }
-        if (filtro == null){
-            Log.i("filtro","nulo");
-        }
-        else{
-            Log.i("filtro", filtro);
-        }
         ArrayList<Material> materiales = new ArrayList<Material>();
         try
         {
-            Log.i("filtro",filtro);
-            filtro = "%"+filtro+"%";
-            String ordenSQL = "SELECT * FROM materiales WHERE MATERIAL LIKE ?);";
+            filtroMaterial = "%"+filtroMaterial+"%";
+            filtroFamilia = "%"+filtroFamilia+"%";
+            String ordenSQL = "SELECT * FROM materiales WHERE MATERIAL LIKE ? AND FAMILIA LIKE ?;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setString(1, filtro);
+            sentencia.setString(1, filtroMaterial);
+            sentencia.setString(2, filtroFamilia);
             ResultSet resultado = sentencia.executeQuery();
 
             while (resultado.next())
@@ -160,7 +168,8 @@ public class MaterialDB {
                 String MATERIAL = resultado.getString("MATERIAL");
                 String UNIDAD_MEDIDA = resultado.getString("UNIDAD_MEDIDA");
                 String ABREVIATURA_UNIDAD_MEDIDA = resultado.getString("ABREVIATURA_UNIDAD_MEDIDA");
-                Material m = new Material(ID_MATERIAL, MATERIAL, UNIDAD_MEDIDA, ABREVIATURA_UNIDAD_MEDIDA);
+                String FAMILIA = resultado.getString("FAMILIA");
+                Material m = new Material(ID_MATERIAL, MATERIAL, UNIDAD_MEDIDA, ABREVIATURA_UNIDAD_MEDIDA, FAMILIA);
                 materiales.add(m);
             }
             resultado.close();

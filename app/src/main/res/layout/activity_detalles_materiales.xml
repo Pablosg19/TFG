@@ -5,21 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EFE0E0"
-    tools:context=".Activities.Obras.NewObraActivity">
-
-    <TextView
-        android:id="@+id/txt_newObra_user"
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="620dp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".Activities.Materiales.DetallesMaterialesActivity">
 
     <ImageView
-        android:id="@+id/img_logo"
-        android:layout_width="wrap_content"
+        android:id="@+id/img_logo4"
+        android:layout_width="0dp"
         android:layout_height="75dp"
         android:layout_marginStart="105dp"
         android:layout_marginTop="10dp"
@@ -32,122 +22,127 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_modified" />
 
-    <EditText
-        android:id="@+id/edt_newObra_Obra"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="90dp"
-        android:ems="10"
-        android:hint="@string/Obra"
-        android:inputType="textPersonName"
-        android:paddingLeft="10sp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_newObra_titulo" />
-
-    <EditText
-        android:id="@+id/edt_newObra_direccion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="90dp"
-        android:ems="10"
-        android:hint="@string/Direccion"
-        android:inputType="textPersonName"
-        android:paddingLeft="10sp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_Obra" />
-
-    <EditText
-        android:id="@+id/edt_newObra_Localizacion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="90dp"
-        android:ems="10"
-        android:hint="@string/Localizacion"
-        android:inputType="textPersonName"
-        android:paddingLeft="10sp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_direccion" />
-
-    <EditText
-        android:id="@+id/edt_newObra_PrecioTerreno"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="90dp"
-        android:ems="10"
-        android:hint="@string/Precio_Terreno"
-        android:inputType="textPersonName"
-        android:paddingLeft="10sp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_Localizacion" />
-
-    <Button
-        android:id="@+id/bt_newObra_anadirObra"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="15dp"
-        android:backgroundTint="#4CAF50"
-        android:onClick="anadirNewObra"
-        android:text="@string/Anadir"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/bt_newObra_cancelarObra"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_PrecioTerreno" />
-
-    <Button
-        android:id="@+id/bt_newObra_cancelarObra"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="55dp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:onClick="cancelarNewObra"
-        android:text="@string/Cancelar"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bt_newObra_anadirObra"
-        app:layout_constraintTop_toBottomOf="@+id/edt_newObra_PrecioTerreno" />
-
     <TextView
-        android:id="@+id/txt_newObra_titulo"
+        android:id="@+id/txt_detalle_material"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="90dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="90dp"
         android:gravity="center"
-        android:text="@string/nuevaObra"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/img_logo4" />
+
+    <EditText
+        android:id="@+id/edt_detalle_unidadMedida"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_detalle_material" />
+
+    <EditText
+        android:id="@+id/edt_detalle_abreviatura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_detalle_unidadMedida" />
+
+    <EditText
+        android:id="@+id/edt_detalle_familia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_detalle_abreviatura" />
+
+    <ImageView
+        android:id="@+id/img_detalleMaterial_editar"
+        android:layout_width="39dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="186dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="186dp"
+        android:onClick="editarMaterial"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_detalle_familia"
+        app:srcCompat="@drawable/edit" />
+
+    <Button
+        android:id="@+id/bt_detalleMaterial_aceptarCambios"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="-25dp"
+        android:layout_marginEnd="15dp"
+        android:backgroundTint="#4CAF50"
+        android:onClick="updateMaterial"
+        android:text="@string/aceptar"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/bt_detalleMaterial_cancelarCambios"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_detalleMaterial_editar" />
+
+    <Button
+        android:id="@+id/bt_detalleMaterial_cancelarCambios"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="-25dp"
+        android:layout_marginEnd="55dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:onClick="cancelCambios"
+        android:text="@string/Cancelar"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt_detalleMaterial_aceptarCambios"
+        app:layout_constraintTop_toBottomOf="@+id/img_detalleMaterial_editar" />
+
+    <TextView
+        android:id="@+id/txt_detalleMaterial_user"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="620dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

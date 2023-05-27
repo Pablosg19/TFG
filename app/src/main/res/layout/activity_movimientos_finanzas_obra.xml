@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFE0E0"
+    tools:context=".Activities.Finanzas.MovimientosFinanzas.MovimientosFinanzasObraActivity">
+
+    <TextView
+        android:id="@+id/txt_movimientoFinanza_user"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="620dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_movimientosFinanza_titulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        android:text="@string/Finanzas"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movimientosFinanzas"
+        android:layout_width="0dp"
+        android:layout_height="380dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="105dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_modified" />
+
+    <TextView
+        android:id="@+id/txt_movimientoFinanza_obra"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="10dp"
+        android:paddingStart="5sp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_movimientosFinanza_titulo" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="35dp"
+        android:gravity="right"
+        android:text="@string/ordenar"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/sp_movimientoFinanza_ordenar"
+        app:layout_constraintStart_toEndOf="@+id/txt_movimientoFinanza_obra"
+        app:layout_constraintTop_toBottomOf="@+id/txt_movimientosFinanza_titulo" />
+
+    <Spinner
+        android:id="@+id/sp_movimientoFinanza_ordenar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/txt_movimientosFinanza_titulo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

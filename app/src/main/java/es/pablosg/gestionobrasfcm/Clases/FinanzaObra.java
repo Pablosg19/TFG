@@ -1,9 +1,14 @@
 package es.pablosg.gestionobrasfcm.Clases;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class FinanzaObra implements Serializable {
+public class FinanzaObra implements Parcelable {
 
     private int ID_OBRA;
     private String OBRA;
@@ -36,5 +41,32 @@ public class FinanzaObra implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(ID_OBRA);
+    }
+
+    protected FinanzaObra(Parcel in) {
+        ID_OBRA = in.readInt();
+        OBRA = in.readString();
+        INGRESOS = in.readDouble();
+        GASTOS = in.readDouble();
+    }
+
+    public static final Creator<FinanzaObra> CREATOR = new Creator<FinanzaObra>() {
+        @Override
+        public FinanzaObra createFromParcel(Parcel in) {
+            return new FinanzaObra(in);
+        }
+        @Override
+        public FinanzaObra[] newArray(int size) { return new FinanzaObra[size]; }
+    };
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(ID_OBRA);
+        dest.writeString(OBRA);
+        dest.writeDouble(INGRESOS);
+        dest.writeDouble(GASTOS);
     }
 }

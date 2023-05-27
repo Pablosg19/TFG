@@ -4,6 +4,167 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFE0E0"
     tools:context=".Activities.Materiales.MaterialesActivity">
 
+    <ImageView
+        android:id="@+id/img_limpiarFiltrosMateriales"
+        android:layout_width="50dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="115dp"
+        android:onClick="borrarFiltros"
+        app:layout_constraintEnd_toStartOf="@+id/edt_filtroMaterial"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/limpiar" />
+
+    <EditText
+        android:id="@+id/edt_filtroFamilia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="5dp"
+        android:ems="10"
+        android:hint="@string/familia"
+        android:inputType="textPersonName"
+        android:paddingLeft="5sp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/img_buscarMaterial"
+        app:layout_constraintStart_toEndOf="@+id/edt_filtroMaterial"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/img_buscarMaterial"
+        android:layout_width="39dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="5dp"
+        android:onClick="realizarBusqueda"
+        app:layout_constraintEnd_toStartOf="@+id/img_addMaterial"
+        app:layout_constraintStart_toEndOf="@+id/edt_filtroFamilia"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/buscar" />
+
+    <TextView
+        android:id="@+id/txt_materiales_user"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="610dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movimientosFinanzas"
+        android:layout_width="0dp"
+        android:layout_height="320dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_buscarMaterial" />
+
+    <ImageView
+        android:id="@+id/img_materiales_salir"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:onClick="salir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_materiales_finanzas"
+        app:srcCompat="@drawable/exit" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="105dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_modified" />
+
+    <Button
+        android:id="@+id/bt_materiales_obras"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="#4CAF50"
+        android:text="@string/Obras"
+        android:textSize="11sp"
+        android:onClick="goToObras"
+        app:layout_constraintBottom_toTopOf="@+id/txt_materiales_user"
+        app:layout_constraintEnd_toStartOf="@+id/bt_materiales_materiales"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
+
+    <Button
+        android:id="@+id/bt_materiales_materiales"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#388E3C"
+        android:text="@string/Materiales"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_materiales_user"
+        app:layout_constraintEnd_toStartOf="@+id/bt_materiales_finanzas"
+        app:layout_constraintStart_toEndOf="@+id/bt_materiales_obras"
+        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
+
+    <EditText
+        android:id="@+id/edt_filtroMaterial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="5dp"
+        android:ems="10"
+        android:hint="@string/material"
+        android:inputType="textPersonName"
+        android:paddingLeft="5sp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/edt_filtroFamilia"
+        app:layout_constraintStart_toEndOf="@+id/img_limpiarFiltrosMateriales"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/img_addMaterial"
+        android:layout_width="39dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="25dp"
+        android:onClick="newMaterial"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_buscarMaterial"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/add" />
+
+    <Button
+        android:id="@+id/bt_materiales_finanzas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="#4CAF50"
+        android:onClick="goToFinanzas"
+        android:text="@string/Finanzas"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_materiales_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt_materiales_materiales"
+        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
 </androidx.constraintlayout.widget.ConstraintLayout>

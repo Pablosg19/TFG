@@ -46,14 +46,10 @@ public class ListaObrasAdapter extends RecyclerView.Adapter<ObrasViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ObrasViewHolder holder, int position) {
-        DecimalFormat format = new DecimalFormat();
-        format.setMaximumFractionDigits(2);
-        format.setMinimumFractionDigits(2);
         if (listaObras != null){
             Obra obra_actual = listaObras.get(position);
             holder.txt_rv_obra.setText(obra_actual.getOBRA());
-            holder.txt_rv_direccion.setText(obra_actual.getDIRECCION());
-            holder.txt_rv_localizacion.setText(obra_actual.getLOCALIZACION());
+            holder.txt_rv_direccion.setText(obra_actual.getDIRECCION() + ", " + obra_actual.getLOCALIZACION());
         }
     }
 

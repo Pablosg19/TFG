@@ -87,6 +87,7 @@ public class ObraDB {
             return false;
         }
         try{
+            // MAL MAL MAL MAL MAL
             String ordenSQL = "DELETE FROM obras WHERE (OBRA = ?);";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,OBRA);
@@ -110,21 +111,31 @@ public class ObraDB {
         }
     }
 
-    public static boolean updateObra(Obra o, String ID_OBRA){
+    public static boolean updateObra(Obra o, String OBRA){
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if (conexion == null){
             return false;
         }
         try {
-            String ordenSQL = "UPDATE obras SET OBRA = ?, DIRECCION = ?, LOCALIZACION = ?, PRECIO_TERRENO = ?, TERMINAR = ?, VENDIDA = ? WHERE ID_OBRA = ?;";
+            String ordenSQL = "SELECT ID_OBRA FROM obras WHERE OBRA = ?";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
+            sentencia.setString(1, OBRA);
+            ResultSet resultado = sentencia.executeQuery();
+            int ID_OBRA = 0;
+            while (resultado.next()) {
+                ID_OBRA = resultado.getInt("ID_OBRA");
+            }
+            sentencia.close();
+            resultado.close();
+
+            ordenSQL = "UPDATE obras SET OBRA = ?, DIRECCION = ?, LOCALIZACION = ?, PRECIO_TERRENO = ?, TERMINAR = ?, VENDIDA = ? WHERE ID_OBRA = " + ID_OBRA + ";";
+            sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,o.getOBRA());
             sentencia.setString(2,o.getDIRECCION());
             sentencia.setString(3,o.getLOCALIZACION());
             sentencia.setDouble(4,o.getPRECIO_TERRENO());
             sentencia.setBoolean(5, o.isTERMINAR());
             sentencia.setBoolean(6, o.isVENDIDA());
-            sentencia.setString(8, ID_OBRA);
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -135,6 +146,7 @@ public class ObraDB {
                 return false;
             }
         } catch (SQLException e1){
+            e1.printStackTrace();
             return false;
         }
     }
@@ -149,7 +161,7 @@ public class ObraDB {
         ArrayList<Obra> obras = new ArrayList<Obra>();
         try
         {
-            filtroObra = "%"+filtroObra+"%";
+            filtroObra = filtroObra+"%";
             filtroLocalizacion = "%"+filtroLocalizacion+"%";
             String ordenSQL = "SELECT ID_OBRA, OBRA, DIRECCION, LOCALIZACION, PRECIO_TERRENO, TERMINAR, VENDIDA FROM obras WHERE OBRA LIKE ? and LOCALIZACION LIKE ?;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);

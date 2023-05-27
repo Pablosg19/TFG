@@ -26,7 +26,7 @@ public class FinanzaObraDB {
         try
         {
             Statement sentencia = conexion.createStatement();
-            String ordenSQL = "SELECT obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, GASTOS, INGRESOS FROM finanzas_obras ORDER BY OBRA;";
+            String ordenSQL = "SELECT obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, GASTOS, INGRESOS FROM finanza_obra ORDER BY OBRA;";
             ResultSet resultado = sentencia.executeQuery(ordenSQL);
             while (resultado.next())
             {
@@ -139,7 +139,7 @@ public class FinanzaObraDB {
         try
         {
             filtroOBRA = "%"+filtroOBRA+"%";
-            String ordenSQL = "SELECT obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, GASTOS, INGRESOS FROM finanzas_obras WHERE OBRA LIKE ? ORDER BY OBRA;";
+            String ordenSQL = "SELECT obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, GASTOS, INGRESOS FROM finanza_obra WHERE (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) LIKE ? ORDER BY OBRA;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1, filtroOBRA);
             ResultSet resultado = sentencia.executeQuery();

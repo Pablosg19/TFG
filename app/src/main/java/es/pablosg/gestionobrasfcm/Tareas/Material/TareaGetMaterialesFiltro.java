@@ -8,15 +8,17 @@ import es.pablosg.gestionobrasfcm.Modelos.MaterialDB;
 
 public class TareaGetMaterialesFiltro implements Callable<ArrayList<Material>> {
 
-    private String filtro = null;
+    private String filtroMaterial = null;
+    private String filtroFamilia = null;
 
-    public TareaGetMaterialesFiltro(String filtro) {
-        this.filtro = filtro;
+    public TareaGetMaterialesFiltro(String filtroMaterial, String filtroFamilia) {
+        this.filtroFamilia = filtroFamilia;
+        this.filtroMaterial = filtroMaterial;
     }
 
     @Override
     public ArrayList<Material> call() throws Exception {
-        ArrayList<Material> materiales = MaterialDB.getMaterialesFiltro(filtro);
+        ArrayList<Material> materiales = MaterialDB.getMaterialesFiltro(filtroMaterial, filtroFamilia);
         return materiales;
     }
 }

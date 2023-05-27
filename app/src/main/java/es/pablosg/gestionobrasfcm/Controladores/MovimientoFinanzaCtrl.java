@@ -11,6 +11,7 @@ import es.pablosg.gestionobrasfcm.Clases.MovimientoFinanza;
 import es.pablosg.gestionobrasfcm.Tareas.MovimientosFinanzas.TareaDeleteMovimientoFinanza;
 import es.pablosg.gestionobrasfcm.Tareas.MovimientosFinanzas.TareaGetMovimientoFinanza;
 import es.pablosg.gestionobrasfcm.Tareas.MovimientosFinanzas.TareaGetMovimientoFinanzaFiltro;
+import es.pablosg.gestionobrasfcm.Tareas.MovimientosFinanzas.TareaGetMovimientoFinanzaMostrar;
 import es.pablosg.gestionobrasfcm.Tareas.MovimientosFinanzas.TareaNewMovimientoFinanza;
 import es.pablosg.gestionobrasfcm.Tareas.MovimientosFinanzas.TareaUpdateMovimientoFinanza;
 
@@ -120,6 +121,29 @@ public class MovimientoFinanzaCtrl {
     public static ArrayList<MovimientoFinanza> getMovimientoFinanzaFiltro(String filtroOBRA){
         ArrayList<MovimientoFinanza> movimientos = null;
         FutureTask tarea = new FutureTask(new TareaGetMovimientoFinanzaFiltro(filtroOBRA));
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        es.submit(tarea);
+        try {
+            movimientos = (ArrayList<MovimientoFinanza>) tarea.get();
+            es.shutdown();
+            try {
+                if (!es.awaitTermination(2000, TimeUnit.MILLISECONDS)){
+                    es.shutdownNow();
+                }
+            }  catch (InterruptedException e) {
+                es.shutdownNow();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return movimientos;
+    }
+
+    public static ArrayList<MovimientoFinanza> getMovimientoFinanzaMostrar(String filtroMostrar, String OBRA){
+        ArrayList<MovimientoFinanza> movimientos = null;
+        FutureTask tarea = new FutureTask(new TareaGetMovimientoFinanzaMostrar(filtroMostrar, OBRA));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
         try {

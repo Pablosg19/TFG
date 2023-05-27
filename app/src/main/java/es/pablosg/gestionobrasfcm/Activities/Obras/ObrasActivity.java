@@ -8,14 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import es.pablosg.gestionobrasfcm.Activities.Finanzas.FinanzasActivity;
@@ -27,18 +26,20 @@ import es.pablosg.gestionobrasfcm.R;
 
 public class ObrasActivity extends AppCompatActivity {
 
+    public static DecimalFormat format = new DecimalFormat("#.00");
+
     public static final String USUARIO_INTRODUCIDO = "espablosggestionobrasfcmnewobrausuariointroducido";
     public static final String CARGO_USUARIO = "espablosggestionobrasfcmnewobracargousuario";
 
-    private final String admin = "Administrador";
-    private final String jefe = "Jefe";
-    private final String JefeObra = "Jefe de Obra";
-    private final String AgenteInmobiliario = "Agente Inmobiliario";
-    private final String Administrativo = "Administrativo";
-    private final String Albañil = "Albañil";
+    public static final String admin = "Administrador";
+    public static final String jefe = "Jefe";
+    public static final String JefeObra = "Jefe de Obra";
+    public static final String AgenteInmobiliario = "Agente Inmobiliario";
+    public static final String Administrativo = "Administrativo";
+    public static final String Albañil = "Albañil";
 
-    private String CARGO;
-    private String USER;
+    public static String CARGO;
+    public static String USER;
 
     private Intent intent;
 
@@ -53,22 +54,28 @@ public class ObrasActivity extends AppCompatActivity {
     private RecyclerView rvObras;
     private ListaObrasAdapter obrasAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_obras);
 
         intent = getIntent();
-        USER = intent.getStringExtra(Login.USUARIO_INTRODUCIDO);
-        CARGO = intent.getStringExtra(Login.CARGO_USUARIO);
-
-        txt_user = (TextView) findViewById(R.id.txt_user);
-        bt_obras = (Button) findViewById(R.id.bt_obras);
-        bt_materiales = (Button) findViewById(R.id.bt_materiales);
-        bt_finanzas = (Button) findViewById(R.id.bt_finanzas);
+        if(intent != null){
+            USER = intent.getStringExtra(Login.USUARIO_INTRODUCIDO);
+            CARGO = intent.getStringExtra(Login.CARGO_USUARIO);
+            if(USER == null || CARGO == null){
+                USER = intent.getStringExtra(MaterialesActivity.USUARIO_MATERIALES);
+                CARGO = intent.getStringExtra(MaterialesActivity.CARGO_MATERIALES);
+            }
+        }
+        txt_user = (TextView) findViewById(R.id.txt_obras_user);
+        bt_obras = (Button) findViewById(R.id.bt_obras_obras);
+        bt_materiales = (Button) findViewById(R.id.bt_obras_materiales);
+        bt_finanzas = (Button) findViewById(R.id.bt_obras_finanzas);
         edt_nombre = (EditText) findViewById(R.id.edt_filtroObra);
         edt_localizacion = (EditText) findViewById(R.id.edt_filtroLocalizacion);
-        rvObras = (RecyclerView) findViewById(R.id.rv_obras);
+        rvObras = (RecyclerView) findViewById(R.id.rv_movimientosFinanzas);
         img_newObra = (ImageView) findViewById(R.id.img_addObra);
 
         if(CARGO.equals(admin) || CARGO.equals(jefe) || CARGO.equals(JefeObra)){
@@ -87,6 +94,7 @@ public class ObrasActivity extends AppCompatActivity {
         }
         rvObras.setAdapter(obrasAdapter);
         rvObras.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     public void goToFinanzas(View view) {
@@ -108,13 +116,18 @@ public class ObrasActivity extends AppCompatActivity {
         }
     }
 
+    public void borrarFiltros(View view){
+        edt_nombre.setText("");
+        edt_localizacion.setText("");
+        realizarBusqueda(view);
+    }
+
     public void realizarBusqueda(View view){
         String nombre = String.valueOf(edt_nombre.getText());
         String localizacion = String.valueOf(edt_localizacion.getText());
 
         obrasAdapter = new ListaObrasAdapter(this);
         ArrayList<Obra> obras = ObraCtrl.getObrasFiltro(nombre, localizacion);
-        Log.i("obras", String.valueOf(obras.size()));
         if (obras.size() != 0 ){
             obrasAdapter.setListaObras(obras);
         }
@@ -178,8 +191,6 @@ public class ObrasActivity extends AppCompatActivity {
 
     public void newObra(View view){
         Intent intent = new Intent(this,NewObraActivity.class);
-        intent.putExtra(USUARIO_INTRODUCIDO, USER);
-        intent.putExtra(CARGO_USUARIO,CARGO);
         startActivity(intent);
     }
 }

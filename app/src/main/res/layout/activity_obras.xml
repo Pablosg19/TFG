@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/logo_modified" />
 
     <TextView
-        android:id="@+id/txt_user"
+        android:id="@+id/txt_obras_user"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:layout_marginStart="25dp"
@@ -35,16 +35,16 @@
         android:id="@+id/edt_filtroObra"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="5dp"
         android:ems="10"
-        android:hint="@string/Nombre"
+        android:hint="@string/Obra"
         android:inputType="textPersonName"
         android:paddingLeft="5sp"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/edt_filtroLocalizacion"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_limpiarFiltrosObra"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
@@ -53,9 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="5dp"
         android:ems="10"
-        android:hint="@string/Localizacion"
+        android:hint="@string/ciudad"
         android:inputType="textPersonName"
         android:paddingLeft="5sp"
         android:textSize="16sp"
@@ -67,8 +67,8 @@
         android:id="@+id/img_buscarObra"
         android:layout_width="39dp"
         android:layout_height="44dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="120dp"
-        android:layout_marginEnd="5dp"
         android:onClick="realizarBusqueda"
         app:layout_constraintEnd_toStartOf="@+id/img_addObra"
         app:layout_constraintStart_toEndOf="@+id/edt_filtroLocalizacion"
@@ -82,15 +82,15 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="25dp"
-        android:visibility="invisible"
         android:onClick="newObra"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_buscarObra"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/add" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_obras"
+        android:id="@+id/rv_movimientosFinanzas"
         android:layout_width="0dp"
         android:layout_height="320dp"
         android:layout_marginStart="25dp"
@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/img_buscarObra" />
 
     <Button
-        android:id="@+id/bt_obras"
+        android:id="@+id/bt_obras_obras"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -109,26 +109,26 @@
         android:backgroundTint="#388E3C"
         android:text="@string/Obras"
         android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/txt_user"
-        app:layout_constraintEnd_toStartOf="@+id/bt_materiales"
+        app:layout_constraintBottom_toTopOf="@+id/txt_obras_user"
+        app:layout_constraintEnd_toStartOf="@+id/bt_obras_materiales"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_obras" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
 
     <Button
-        android:id="@+id/bt_materiales"
+        android:id="@+id/bt_obras_materiales"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
         android:text="@string/Materiales"
         android:textSize="11sp"
         android:onClick="goToMateriales"
-        app:layout_constraintBottom_toTopOf="@+id/txt_user"
-        app:layout_constraintEnd_toStartOf="@+id/bt_finanzas"
-        app:layout_constraintStart_toEndOf="@+id/bt_obras"
-        app:layout_constraintTop_toBottomOf="@+id/rv_obras" />
+        app:layout_constraintBottom_toTopOf="@+id/txt_obras_user"
+        app:layout_constraintEnd_toStartOf="@+id/bt_obras_finanzas"
+        app:layout_constraintStart_toEndOf="@+id/bt_obras_obras"
+        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
 
     <Button
-        android:id="@+id/bt_finanzas"
+        android:id="@+id/bt_obras_finanzas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -137,20 +137,32 @@
         android:text="@string/Finanzas"
         android:textSize="11sp"
         android:onClick="goToFinanzas"
-        app:layout_constraintBottom_toTopOf="@+id/txt_user"
+        app:layout_constraintBottom_toTopOf="@+id/txt_obras_user"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bt_materiales"
-        app:layout_constraintTop_toBottomOf="@+id/rv_obras" />
+        app:layout_constraintStart_toEndOf="@+id/bt_obras_materiales"
+        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
 
     <ImageView
-        android:id="@+id/img_salir"
+        android:id="@+id/img_obras_salir"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="25dp"
         android:onClick="salir"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_finanzas"
+        app:layout_constraintTop_toBottomOf="@+id/bt_obras_finanzas"
         app:srcCompat="@drawable/exit" />
+
+    <ImageView
+        android:id="@+id/img_limpiarFiltrosObra"
+        android:layout_width="50dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="115dp"
+        android:onClick="borrarFiltros"
+        app:layout_constraintEnd_toStartOf="@+id/edt_filtroObra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/limpiar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

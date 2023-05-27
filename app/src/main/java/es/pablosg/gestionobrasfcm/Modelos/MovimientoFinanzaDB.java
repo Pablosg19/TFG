@@ -150,7 +150,7 @@ public class MovimientoFinanzaDB {
         try
         {
             filtroOBRA = "%"+filtroOBRA+"%";
-            String ordenSQL = "SELECT ID_MOVIMIENTO_FINANZA, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, MOVIMIENTO, DINERO, FROM movimientos_finanzas WHERE OBRA LIKE ? ORDER BY OBRA;";
+            String ordenSQL = "SELECT ID_MOVIMIENTO_FINANZA, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, MOVIMIENTO, DINERO FROM movimientos_finanzas WHERE (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) LIKE ? ORDER BY OBRA;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1, filtroOBRA);
             ResultSet resultado = sentencia.executeQuery();
@@ -173,6 +173,55 @@ public class MovimientoFinanzaDB {
         {
             e.printStackTrace();
             Log.i("sql","error sql getMovimientosFinanzasFiltroDB");
+            return movimientos;
+        }
+    }
+
+    public static ArrayList<MovimientoFinanza> getMovimientosFinanzasMostrar(String filtroMostrar, String filtroOBRA){
+        Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
+        if(conexion == null)
+        {
+            Log.i("sql","no conecta la base de datos");
+            return null;
+        }
+
+        ArrayList<MovimientoFinanza> movimientos = new ArrayList<MovimientoFinanza>();
+        try
+        {
+            if(filtroMostrar.equalsIgnoreCase("ingresos")){
+                filtroMostrar = "%0%";
+            }
+            else if(filtroMostrar.equalsIgnoreCase("gastos")){
+                filtroMostrar = "%1%";
+            }
+            else{
+                filtroMostrar = "%%";
+
+            }
+            String ordenSQL = "SELECT ID_MOVIMIENTO_FINANZA, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, MOVIMIENTO, DINERO FROM movimientos_finanzas WHERE (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) LIKE ? AND MOVIMIENTO LIKE ? ORDER BY OBRA;";
+            PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
+            sentencia.setString(1, filtroOBRA);
+            sentencia.setString(2, filtroMostrar);
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next())
+            {
+                int ID_MOVIMIENTO_FINANZA = resultado.getInt("ID_MOVIMIENTO_FINANZA");
+                int ID_OBRA = resultado.getInt("obras_ID_OBRA");
+                String OBRA = resultado.getString("OBRA");
+                int MOVIMIENTO = resultado.getInt("MOVIMIENTO");
+                Double DINERO = resultado.getDouble("DINERO");
+                MovimientoFinanza mf = new MovimientoFinanza(ID_MOVIMIENTO_FINANZA, OBRA, MOVIMIENTO, DINERO);
+                movimientos.add(mf);
+            }
+            resultado.close();
+            sentencia.close();
+            conexion.close();
+            return movimientos;
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+            Log.i("sql","error sql getMovimientosFinanzasMostrarDB");
             return movimientos;
         }
     }
