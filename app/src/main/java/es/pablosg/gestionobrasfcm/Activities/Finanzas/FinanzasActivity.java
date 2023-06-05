@@ -37,10 +37,10 @@ public class FinanzasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_finanzas);
 
         edt_obra = (EditText) findViewById(R.id.edt_filtroObra_finanzas);
-        rvFinanzas = (RecyclerView) findViewById(R.id.rv_movimientosFinanzas);
+        rvFinanzas = (RecyclerView) findViewById(R.id.rv_gestionMateriales);
         txt_user = (TextView) findViewById(R.id.txt_finanzas_user);
 
-        txt_user.setText(ObrasActivity.USER);
+        txt_user.setText(Login.USUARIO_INTRODUCIDO);
 
         finanzasAdapter = new ListaFinanzasAdapter(this);
         ArrayList<FinanzaObra> finanzas = FinanzaObraCtrl.getFinanzasObras();
@@ -108,8 +108,8 @@ public class FinanzasActivity extends AppCompatActivity {
 
     public void goToObras(View view){
         Intent intent = new Intent(this, ObrasActivity.class);
-        intent.putExtra(USUARIO_FINANZAS,ObrasActivity.USER);
-        intent.putExtra(CARGO_FINANZAS, ObrasActivity.CARGO);
+        intent.putExtra(USUARIO_FINANZAS,Login.USUARIO_INTRODUCIDO);
+        intent.putExtra(CARGO_FINANZAS, Login.CARGO_USUARIO);
         startActivity(intent);
     }
 }

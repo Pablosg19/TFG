@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import es.pablosg.gestionobrasfcm.Activities.Login;
 import es.pablosg.gestionobrasfcm.Activities.Obras.ObrasActivity;
 import es.pablosg.gestionobrasfcm.Activities.Obras.ObrasViewHolder;
 import es.pablosg.gestionobrasfcm.Clases.Material;
@@ -52,8 +53,8 @@ public class DetallesMaterialesActivity extends AppCompatActivity {
         bt_cancelarCambios = (Button) findViewById(R.id.bt_detalleMaterial_cancelarCambios);
         txt_user = (TextView) findViewById(R.id.txt_detalleMaterial_user);
 
-        txt_user.setText(ObrasActivity.USER);
-        if(ObrasActivity.CARGO.equalsIgnoreCase(ObrasActivity.jefe) || ObrasActivity.CARGO.equalsIgnoreCase(ObrasActivity.JefeObra) || ObrasActivity.CARGO.equalsIgnoreCase(ObrasActivity.admin)){
+        txt_user.setText(Login.USUARIO_INTRODUCIDO);
+        if(Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.jefe) || Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.JefeObra) || Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.admin)){
             img_editar.setVisibility(View.VISIBLE);
         } else{
             img_editar.setVisibility(View.INVISIBLE);

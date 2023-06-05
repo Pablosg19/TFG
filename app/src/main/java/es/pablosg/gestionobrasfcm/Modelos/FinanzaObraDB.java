@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import es.pablosg.gestionobrasfcm.Clases.FinanzaObra;
 import es.pablosg.gestionobrasfcm.Clases.GestionMaterial;
+import es.pablosg.gestionobrasfcm.Clases.Obra;
 
 public class FinanzaObraDB {
 
@@ -50,21 +51,21 @@ public class FinanzaObraDB {
         }
     }
 
-    public static boolean newFinanzaObra(FinanzaObra fo) {
+    public static boolean newFinanzaObra(String obra) {
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if (conexion == null)
         {
             return false;
         }
         try{
-            String ordenSQL = "INSERT INTO finanzas_obras (obras_ID_OBRA, GASTOS, INGRESOS) VALUES((SELECT ID_OBRA FROM obras WHERE OBRA = ?),?,?);";
-            PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setString(1,fo.getOBRA());
-            sentencia.setDouble(2,fo.getGASTOS());
-            sentencia.setDouble(3,fo.getINGRESOS());
+            String ordenSQL = "INSERT INTO finanza_obra (obras_ID_OBRA, GASTOS, INGRESOS) VALUES((SELECT ID_OBRA FROM obras WHERE OBRA = ?), (SELECT SUM(DINERO) FROM movimientos_finanzas WHERE obras_ID_OBRA = (SELECT ID_OBRA FROM obras WHERE OBRA = ?) and MOVIMIENTO = 1), (SELECT SUM(DINERO) FROM movimientos_finanzas WHERE obras_ID_OBRA = (SELECT ID_OBRA FROM obras WHERE OBRA = ?) and MOVIMIENTO = 0));";
+            PreparedStatement sentencia2 = conexion.prepareStatement(ordenSQL);
+            sentencia2.setString(1, obra);
+            sentencia2.setString(2, obra);
+            sentencia2.setString(3, obra);
 
-            int rows = sentencia.executeUpdate();
-            sentencia.close();
+            int rows = sentencia2.executeUpdate();
+            sentencia2.close();
             conexion.close();
             if (rows > 0){
                 return true;

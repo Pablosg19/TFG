@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movimientosFinanzas"
+        android:id="@+id/rv_gestionMateriales"
         android:layout_width="0dp"
         android:layout_height="320dp"
         android:layout_marginStart="25dp"
@@ -91,7 +91,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_finanzas_user"
         app:layout_constraintEnd_toStartOf="@+id/bt_finanzas_finanzas"
         app:layout_constraintStart_toEndOf="@+id/bt_finanzas_obras"
-        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_gestionMateriales" />
 
     <Button
         android:id="@+id/bt_finanzas_finanzas"
@@ -105,7 +105,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_finanzas_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bt_finanzas_materiales"
-        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_gestionMateriales" />
 
     <Button
         android:id="@+id/bt_finanzas_obras"
@@ -120,7 +120,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_finanzas_user"
         app:layout_constraintEnd_toStartOf="@+id/bt_finanzas_materiales"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_movimientosFinanzas" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_gestionMateriales" />
 
     <ImageView
         android:id="@+id/imageView3"

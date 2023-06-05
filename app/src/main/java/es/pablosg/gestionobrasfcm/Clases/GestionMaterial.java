@@ -8,27 +8,33 @@ public class GestionMaterial implements Serializable {
     private int ID_GESTION_MATERIALES;
     private int ID_OBRA;
     private String OBRA;
-    private int ID_PROVEEDOR;
-    private String PROVEEDOR;
     private int ID_MATERIAL;
     private String MATERIAL;
+    private String UNIDAD_MEDIDA;
     private Double PRECIO;
     private Double CANTIDAD;
 
-    public GestionMaterial(int ID_GESTION_MATERIALES, int ID_OBRA, int ID_PROVEEDOR, int ID_MATERIAL, Double PRECIO, Double CANTIDAD) {
+    public GestionMaterial(int ID_GESTION_MATERIALES, int ID_OBRA, int ID_MATERIAL, Double PRECIO, Double CANTIDAD) {
         this.ID_GESTION_MATERIALES = ID_GESTION_MATERIALES;
         this.ID_OBRA = ID_OBRA;
-        this.ID_PROVEEDOR = ID_PROVEEDOR;
         this.ID_MATERIAL = ID_MATERIAL;
         this.PRECIO = PRECIO;
         this.CANTIDAD = CANTIDAD;
     }
 
-    public GestionMaterial(int ID_GESTION_MATERIALES, String OBRA, String PROVEEDOR, String MATERIAL, Double PRECIO, Double CANTIDAD) {
+    public GestionMaterial(int ID_GESTION_MATERIALES, String OBRA, String MATERIAL, Double PRECIO, Double CANTIDAD) {
         this.ID_GESTION_MATERIALES = ID_GESTION_MATERIALES;
         this.OBRA = OBRA;
-        this.PROVEEDOR = PROVEEDOR;
         this.MATERIAL = MATERIAL;
+        this.PRECIO = PRECIO;
+        this.CANTIDAD = CANTIDAD;
+    }
+
+    public GestionMaterial(int ID_GESTION_MATERIALES, String OBRA, String MATERIAL, String UNIDAD_MEDIDA, Double PRECIO, Double CANTIDAD) {
+        this.ID_GESTION_MATERIALES = ID_GESTION_MATERIALES;
+        this.OBRA = OBRA;
+        this.MATERIAL = MATERIAL;
+        this.UNIDAD_MEDIDA = UNIDAD_MEDIDA;
         this.PRECIO = PRECIO;
         this.CANTIDAD = CANTIDAD;
     }
@@ -44,12 +50,6 @@ public class GestionMaterial implements Serializable {
     }
     public void setID_OBRA(int ID_OBRA) {
         this.ID_OBRA = ID_OBRA;
-    }
-    public int getID_PROVEEDOR() {
-        return ID_PROVEEDOR;
-    }
-    public void setID_PROVEEDOR(int ID_PROVEEDOR) {
-        this.ID_PROVEEDOR = ID_PROVEEDOR;
     }
     public int getID_MATERIAL() {
         return ID_MATERIAL;
@@ -75,18 +75,14 @@ public class GestionMaterial implements Serializable {
     public void setOBRA(String OBRA) {
         this.OBRA = OBRA;
     }
-    public String getPROVEEDOR() {
-        return PROVEEDOR;
-    }
-    public void setPROVEEDOR(String PROVEEDOR) {
-        this.PROVEEDOR = PROVEEDOR;
-    }
     public String getMATERIAL() {
         return MATERIAL;
     }
     public void setMATERIAL(String MATERIAL) {
         this.MATERIAL = MATERIAL;
     }
+    public String getUNIDAD_MEDIDA() { return UNIDAD_MEDIDA; }
+    public void setUNIDAD_MEDIDA(String UNIDAD_MEDIDA) { this.UNIDAD_MEDIDA = UNIDAD_MEDIDA; }
 
     @Override
     public boolean equals(Object o) {

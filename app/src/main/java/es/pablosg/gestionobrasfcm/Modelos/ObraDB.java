@@ -87,7 +87,6 @@ public class ObraDB {
             return false;
         }
         try{
-            // MAL MAL MAL MAL MAL
             String ordenSQL = "DELETE FROM obras WHERE (OBRA = ?);";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,OBRA);
@@ -128,7 +127,7 @@ public class ObraDB {
             sentencia.close();
             resultado.close();
 
-            ordenSQL = "UPDATE obras SET OBRA = ?, DIRECCION = ?, LOCALIZACION = ?, PRECIO_TERRENO = ?, TERMINAR = ?, VENDIDA = ? WHERE ID_OBRA = " + ID_OBRA + ";";
+            ordenSQL = "UPDATE obras SET OBRA = ?, DIRECCION = ?, LOCALIZACION = ?, PRECIO_TERRENO = ?, TERMINAR = ?, VENDIDA = ? WHERE ID_OBRA = ?;";
             sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,o.getOBRA());
             sentencia.setString(2,o.getDIRECCION());
@@ -136,6 +135,7 @@ public class ObraDB {
             sentencia.setDouble(4,o.getPRECIO_TERRENO());
             sentencia.setBoolean(5, o.isTERMINAR());
             sentencia.setBoolean(6, o.isVENDIDA());
+            sentencia.setInt(7, ID_OBRA);
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();

@@ -9,18 +9,14 @@ import es.pablosg.gestionobrasfcm.Modelos.GestionMaterialesDB;
 public class TareaGetGestionMaterialesFiltro implements Callable<ArrayList<GestionMaterial>> {
 
     private String filtroOBRA = null;
-    private String filtroPROVEEDOR = null;
-    private String filtroMATERIAL = null;
 
-    public TareaGetGestionMaterialesFiltro(String filtroOBRA, String filtroPROVEEDOR, String filtroMATERIAL) {
+    public TareaGetGestionMaterialesFiltro(String filtroOBRA) {
         this.filtroOBRA = filtroOBRA;
-        this.filtroPROVEEDOR = filtroPROVEEDOR;
-        this.filtroMATERIAL = filtroMATERIAL;
     }
 
     @Override
     public ArrayList<GestionMaterial> call() throws Exception {
-        ArrayList<GestionMaterial> gestiones = GestionMaterialesDB.getGestionMaterialesFiltro(filtroOBRA, filtroPROVEEDOR, filtroMATERIAL);
+        ArrayList<GestionMaterial> gestiones = GestionMaterialesDB.getGestionMaterialesFiltro(filtroOBRA);
         return gestiones;
     }
 }

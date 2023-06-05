@@ -40,8 +40,8 @@ public class FinanzaObraCtrl {
         return finanzas;
     }
 
-    public static boolean newFinanzaObra(FinanzaObra fo){
-        FutureTask tarea = new FutureTask(new TareaNewFinanzaObra(fo));
+    public static boolean newFinanzaObra(String obra){
+        FutureTask tarea = new FutureTask(new TareaNewFinanzaObra(obra));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
         boolean newFinanzaObraOK = false;

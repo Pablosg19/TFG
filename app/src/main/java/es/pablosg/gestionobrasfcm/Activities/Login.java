@@ -18,9 +18,8 @@ import es.pablosg.gestionobrasfcm.R;
 
 public class Login extends AppCompatActivity {
 
-    public static final String USUARIO_INTRODUCIDO = "espablosggestionobrasfcmusuariointroducido";
-    public static final String CARGO_USUARIO = "espablosggestionobrasfcmcargousuario";
-
+    public static String USUARIO_INTRODUCIDO;
+    public static String CARGO_USUARIO;
 
     private EditText edtUser;
     private EditText edtPassword;
@@ -70,8 +69,10 @@ public class Login extends AppCompatActivity {
                     intent = new Intent(this, ObrasActivity.class);
                 }
 
-                intent.putExtra(USUARIO_INTRODUCIDO,user.getNOMBRE());
-                intent.putExtra(CARGO_USUARIO, CARGO);
+                USUARIO_INTRODUCIDO = user.getNOMBRE();
+                CARGO_USUARIO = CARGO;
+                // intent.putExtra(USUARIO_INTRODUCIDO,user.getNOMBRE());
+                // intent.putExtra(CARGO_USUARIO, CARGO);
                 startActivity(intent);
                 return;
             }

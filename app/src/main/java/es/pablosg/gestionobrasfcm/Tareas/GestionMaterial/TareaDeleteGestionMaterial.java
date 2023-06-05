@@ -6,9 +6,9 @@ import es.pablosg.gestionobrasfcm.Modelos.GestionMaterialesDB;
 
 public class TareaDeleteGestionMaterial implements Callable<Boolean> {
 
-    private String GESTION_MATERIAL = null;
+    private int GESTION_MATERIAL = 0;
 
-    public TareaDeleteGestionMaterial(String GESTION_MATERIAL){
+    public TareaDeleteGestionMaterial(int GESTION_MATERIAL){
         this.GESTION_MATERIAL = GESTION_MATERIAL;
     }
 

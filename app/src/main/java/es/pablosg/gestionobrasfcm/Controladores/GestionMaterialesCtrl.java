@@ -65,7 +65,7 @@ public class GestionMaterialesCtrl {
         }
     }
 
-    public static boolean deleteGestionMaterial(String ID_GESTION_MATERIAL){
+    public static boolean deleteGestionMaterial(int ID_GESTION_MATERIAL){
         FutureTask tarea = new FutureTask(new TareaDeleteGestionMaterial(ID_GESTION_MATERIAL));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
@@ -117,9 +117,9 @@ public class GestionMaterialesCtrl {
         }
     }
 
-    public static ArrayList<GestionMaterial> getGestionMaterialFiltro(String filtroOBRA, String filtroPROVEEDOR, String filtroMATERIAL){
+    public static ArrayList<GestionMaterial> getGestionMaterialFiltro(String filtroOBRA){
         ArrayList<GestionMaterial> gestiones = null;
-        FutureTask tarea = new FutureTask(new TareaGetGestionMaterialesFiltro(filtroOBRA, filtroPROVEEDOR, filtroMATERIAL));
+        FutureTask tarea = new FutureTask(new TareaGetGestionMaterialesFiltro(filtroOBRA));
         ExecutorService es = Executors.newSingleThreadExecutor();
         es.submit(tarea);
         try {

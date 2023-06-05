@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
+import es.pablosg.gestionobrasfcm.Activities.Login;
 import es.pablosg.gestionobrasfcm.Clases.MovimientoFinanza;
 import es.pablosg.gestionobrasfcm.Clases.Obra;
 import es.pablosg.gestionobrasfcm.Controladores.MovimientoFinanzaCtrl;
@@ -49,7 +52,7 @@ public class NewObraActivity extends AppCompatActivity {
         bt_cancelarObra = (Button) findViewById(R.id.bt_newObra_cancelarObra);
 
         txt_usuario = (TextView) findViewById(R.id.txt_newObra_user);
-        txt_usuario.setText(ObrasActivity.USER);
+        txt_usuario.setText(Login.USUARIO_INTRODUCIDO);
     }
 
     public void cancelarNewObra(View view) {
@@ -58,10 +61,6 @@ public class NewObraActivity extends AppCompatActivity {
     }
 
     public void anadirNewObra(View view) {
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2);
-        df.setMinimumFractionDigits(2);
-
         String obra = String.valueOf(edt_obra.getText());
         String direccion = String.valueOf(edt_direccion.getText());
         String localizacion = String.valueOf(edt_localizacion.getText());
@@ -115,6 +114,4 @@ public class NewObraActivity extends AppCompatActivity {
             Toast.makeText(this, "Error al crear la obra "+ obra ,Toast.LENGTH_LONG).show();
         }
     }
-
-
 }

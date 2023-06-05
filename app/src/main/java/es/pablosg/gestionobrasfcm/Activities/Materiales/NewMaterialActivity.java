@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import es.pablosg.gestionobrasfcm.Activities.Login;
 import es.pablosg.gestionobrasfcm.Activities.Obras.ObrasActivity;
 import es.pablosg.gestionobrasfcm.Clases.Material;
 import es.pablosg.gestionobrasfcm.Controladores.MaterialCtrl;
@@ -42,7 +44,7 @@ public class NewMaterialActivity extends AppCompatActivity {
         bt_cancelarMaterial = (Button) findViewById(R.id.bt_newMaterial_cancelarMaterial);
         txt_usuario = (TextView) findViewById(R.id.txt_newMaterial_user);
 
-        txt_usuario.setText(ObrasActivity.USER);
+        txt_usuario.setText(Login.USUARIO_INTRODUCIDO);
     }
 
     public void cancelarNewMaterial(View view) {

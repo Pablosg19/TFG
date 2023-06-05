@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">FCM</string>
-    <string name="FCM">FCM</string>
+    <string name="app_name">Gestion Obras</string>
+    <string name="usuario">Usuario</string>
+    <string name="constrasena">Contraseña</string>
     <string name="login">Entrar</string>
     <string name="errorLogin">Los datos introducidos son incorrectos</string>
     <string name="Materiales">Materiales</string>
@@ -29,4 +30,6 @@
     <string name="nuevoMaterial">NUEVO MATERIAL</string>
     <string name="familia">Familia</string>
     <string name="ordenar">Mostrar: </string>
+    <string name="gestionObraMateriales">Materiales utilizados</string>
+    <string name="cantidad">Cantidad</string>
 </resources>

@@ -7,15 +7,15 @@ import es.pablosg.gestionobrasfcm.Modelos.FinanzaObraDB;
 
 public class TareaNewFinanzaObra implements Callable<Boolean> {
 
-    private FinanzaObra fo = null;
-    public TareaNewFinanzaObra(FinanzaObra fo){
-        this.fo = fo;
+    private String obra = null;
+    public TareaNewFinanzaObra(String obra){
+        this.obra = obra;
     }
 
     @Override
     public Boolean call() throws Exception {
         try {
-            boolean newFinanzaObraOK = FinanzaObraDB.newFinanzaObra(fo);
+            boolean newFinanzaObraOK = FinanzaObraDB.newFinanzaObra(obra);
             return newFinanzaObraOK;
         } catch (Exception e1){
             return false;

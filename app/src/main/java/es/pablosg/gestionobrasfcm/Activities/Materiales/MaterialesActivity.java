@@ -51,17 +51,17 @@ public class MaterialesActivity extends AppCompatActivity {
         edt_material = (EditText) findViewById(R.id.edt_filtroMaterial);
         edt_familia = (EditText) findViewById(R.id.edt_filtroFamilia);
 
-        rvMateriales = (RecyclerView) findViewById(R.id.rv_movimientosFinanzas);
+        rvMateriales = (RecyclerView) findViewById(R.id.rv_gestionMateriales);
         img_addMaterial = (ImageView) findViewById(R.id.img_addMaterial);
 
-        if(ObrasActivity.CARGO.equals(ObrasActivity.admin) || ObrasActivity.CARGO.equals(ObrasActivity.jefe) || ObrasActivity.CARGO.equals(ObrasActivity.JefeObra)){
+        if(Login.CARGO_USUARIO.equals(ObrasActivity.admin) || Login.CARGO_USUARIO.equals(ObrasActivity.jefe) || Login.CARGO_USUARIO.equals(ObrasActivity.JefeObra)){
             img_addMaterial.setVisibility(View.VISIBLE);
         }
         else{
             img_addMaterial.setVisibility(View.INVISIBLE);
         }
 
-        txt_user.setText(ObrasActivity.USER);
+        txt_user.setText(Login.USUARIO_INTRODUCIDO);
 
         materialesAdapter = new ListaMaterialesAdapter(this);
         ArrayList<Material> materiales = MaterialCtrl.getMateriales();
@@ -131,8 +131,6 @@ public class MaterialesActivity extends AppCompatActivity {
 
     public void goToObras(View view){
         Intent intent = new Intent(this, ObrasActivity.class);
-        intent.putExtra(USUARIO_MATERIALES,ObrasActivity.USER);
-        intent.putExtra(CARGO_MATERIALES, ObrasActivity.CARGO);
         startActivity(intent);
     }
 

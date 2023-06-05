@@ -26,22 +26,22 @@ public class GestionMaterialesDB {
         try
         {
             Statement sentencia = conexion.createStatement();
-            String ordenSQL = "SELECT ID_GESTION_MATERIALES, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, proveedor_ID_PROVEEDOR, (SELECT PROVEEDOR FROM proveedores WHERE ID_PROVEEDOR = proveedor_ID_PROVEEDOR) as PROVEEDOR, materiales_ID_MATERIAL, (SELECT MATERIAL FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) as MATERIAL, PRECIO, CANTIDAD,(PRECIO * CANTIDAD) as PRECIO_TOTAL FROM gestion_materiales ORDER BY OBRA;";
+            // String ordenSQL = "SELECT ID_GESTION_MATERIALES, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, materiales_ID_MATERIAL, (SELECT MATERIAL FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) as MATERIAL, PRECIO, CANTIDAD,(PRECIO * CANTIDAD) as PRECIO_TOTAL FROM gestion_materiales ORDER BY OBRA;";
+            String ordenSQL = "SELECT ID_GESTION_MATERIALES, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, materiales_ID_MATERIAL, (SELECT MATERIAL FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) as MATERIAL, PRECIO, CANTIDAD, (SELECT ABREVIATURA_UNIDAD_MEDIDA FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) AS UNIDAD_MEDIDA,(PRECIO * CANTIDAD) as PRECIO_TOTAL FROM gestion_materiales ORDER BY OBRA;";
             ResultSet resultado = sentencia.executeQuery(ordenSQL);
             while (resultado.next())
             {
                 int ID_GRESTION_MATERIAL = resultado.getInt("ID_GESTION_MATERIALES");
-                int ID_OBRA = resultado.getInt("ID_OBRA");
+                int ID_OBRA = resultado.getInt("obras_ID_OBRA");
                 String OBRA = resultado.getString("OBRA");
-                int ID_PROVEEDOR = resultado.getInt("ID_PROVEEDOR");
-                String PROVEEDOR = resultado.getString("PROVEEDOR");
-                int ID_MATERIAL = resultado.getInt("ID_MATERIAL");
+                int ID_MATERIAL = resultado.getInt("materiales_ID_MATERIAL");
                 String MATERIAL = resultado.getString("MATERIAL");
+                String UNIDAD_MEDIDA = resultado.getString("UNIDAD_MEDIDA");
                 Double PRECIO = resultado.getDouble("PRECIO");
                 Double CANTIDAD = resultado.getDouble("CANTIDAD");
                 Double PRECIO_TOTAL = resultado.getDouble("PRECIO_TOTAL");
                // GestionMaterial gm = new GestionMaterial(ID_GRESTION_MATERIAL, ID_OBRA, ID_MATERIAL, ID_PROVEEDOR, PRECIO, CANTIDAD, PRECIO_TOTAL); // Paso ID´s
-                GestionMaterial gm = new GestionMaterial(ID_GRESTION_MATERIAL, OBRA, MATERIAL, PROVEEDOR, PRECIO, CANTIDAD);  //Paso String´s PRECIO_TOTAL calcular en el activity
+                GestionMaterial gm = new GestionMaterial(ID_GRESTION_MATERIAL, OBRA, MATERIAL, UNIDAD_MEDIDA, PRECIO, CANTIDAD);  //Paso String´s PRECIO_TOTAL calcular en el activity
                 gestiones.add(gm);
             }
             resultado.close();
@@ -63,13 +63,12 @@ public class GestionMaterialesDB {
             return false;
         }
         try{
-            String ordenSQL = "INSERT INTO gestion_materiales (ID_GESTION_MATERIALES, obras_ID_OBRA, proveedor_ID_PROVEEDOR, materiales_ID_MATERIAL, PRECIO, CANTIDAD) VALUES('0',(SELECT ID_OBRA FROM obras WHERE OBRA = ?),(SELECT ID_PROVEEDOR FROM proveedores WHERE PROVEEDOR = ?),(SELECT ID_MATERIAL FROM materiales WHERE MATERIAL = ?), ?,?);";
+            String ordenSQL = "INSERT INTO gestion_materiales (ID_GESTION_MATERIALES, obras_ID_OBRA, materiales_ID_MATERIAL, PRECIO, CANTIDAD) VALUES('0',(SELECT ID_OBRA FROM obras WHERE OBRA = ?),(SELECT ID_MATERIAL FROM materiales WHERE MATERIAL = ?), ?,?);";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,gm.getOBRA());
-            sentencia.setString(2,gm.getPROVEEDOR());
-            sentencia.setString(3,gm.getMATERIAL());
-            sentencia.setDouble(4,gm.getPRECIO());
-            sentencia.setDouble(5, gm.getCANTIDAD());
+            sentencia.setString(2,gm.getMATERIAL());
+            sentencia.setDouble(3,gm.getPRECIO());
+            sentencia.setDouble(4, gm.getCANTIDAD());
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -84,7 +83,7 @@ public class GestionMaterialesDB {
         }
     }
 
-    public static boolean deleteGestionMaterial(String GESTION_MATERIAL){
+    public static boolean deleteGestionMaterial(int GESTION_MATERIAL){
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null){
             return false;
@@ -92,7 +91,7 @@ public class GestionMaterialesDB {
         try{
             String ordenSQL = "DELETE FROM gestion_materiales WHERE (ID_GESTION_MATERIAL = ?);";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setString(1,GESTION_MATERIAL);
+            sentencia.setInt(1,GESTION_MATERIAL);
 
             int rows = sentencia.executeUpdate();
             sentencia.close();
@@ -114,14 +113,13 @@ public class GestionMaterialesDB {
             return false;
         }
         try {
-            String ordenSQL = "UPDATE gestion_materiales SET obras_ID_OBRA = (SELECT ID_OBRA FROM obras WHERE OBRA = ?), proveedor_ID_PROVEEDOR = (SELECT ID_PROVEEDOR FROM proveedores WHERE PROVEEDOR = ?), materiales_ID_MATERIAL = (SELECT ID_MATERIAL FROM materiales WHERE MATERIAL = ?), PRECIO = ?, CANTIDAD = ? WHERE ID_GESTION_MATERIAL = ?;";
+            String ordenSQL = "UPDATE gestion_materiales SET obras_ID_OBRA = (SELECT ID_OBRA FROM obras WHERE OBRA = ?), materiales_ID_MATERIAL = (SELECT ID_MATERIAL FROM materiales WHERE MATERIAL = ?), PRECIO = ?, CANTIDAD = ? WHERE ID_GESTION_MATERIAL = ?;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
             sentencia.setString(1,gm.getOBRA());
-            sentencia.setString(2,gm.getPROVEEDOR());
-            sentencia.setString(3,gm.getMATERIAL());
-            sentencia.setDouble(4,gm.getPRECIO());
-            sentencia.setDouble(5,gm.getCANTIDAD());
-            sentencia.setInt(6,ID_GESTION_MATERIAL);
+            sentencia.setString(2,gm.getMATERIAL());
+            sentencia.setDouble(3,gm.getPRECIO());
+            sentencia.setDouble(4,gm.getCANTIDAD());
+            sentencia.setInt(5,ID_GESTION_MATERIAL);
             int rows = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -136,7 +134,7 @@ public class GestionMaterialesDB {
         }
     }
 
-    public static ArrayList<GestionMaterial> getGestionMaterialesFiltro(String filtroOBRA, String filtroPROVEEDOR, String filtroMATERIAL){
+    public static ArrayList<GestionMaterial> getGestionMaterialesFiltro(String filtroOBRA){
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null)
         {
@@ -147,28 +145,20 @@ public class GestionMaterialesDB {
         ArrayList<GestionMaterial> gestiones = new ArrayList<GestionMaterial>();
         try
         {
-            filtroOBRA = "%"+filtroOBRA+"%";
-            filtroPROVEEDOR = "%"+filtroPROVEEDOR+"%";
-            filtroMATERIAL = "%"+filtroMATERIAL+"%";
-            String ordenSQL = "SELECT ID_GESTION_MATERIALES, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, proveedor_ID_PROVEEDOR, (SELECT PROVEEDOR FROM proveedores WHERE ID_PROVEEDOR = proveedor_ID_PROVEEDOR) as PROVEEDOR, materiales_ID_MATERIAL, (SELECT MATERIAL FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) as MATERIAL, PRECIO, CANTIDAD,(PRECIO * CANTIDAD) as PRECIO_TOTAL FROM gestion_materiales WHERE OBRA LIKE ?, PROVEEDOR LIKE ?, MATERIAL LIKE ? ORDER BY OBRA;";
+            // String ordenSQL = "SELECT ID_GESTION_MATERIALES, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, materiales_ID_MATERIAL, (SELECT MATERIAL FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) as MATERIAL,(SELECT ABREVIATURA_UNIDAD_MEDIDA FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) AS UNIDAD_MEDIDA, PRECIO, CANTIDAD,(PRECIO * CANTIDAD) as PRECIO_TOTAL FROM gestion_materiales WHERE obras_ID_OBRA = (SELECT ID_OBRA FROM OBRAS WHERE OBRA = '" + filtroOBRA + "') ORDER BY ID_GESTION_MATERIALES;";
+            String ordenSQL = "SELECT distinct(materiales_ID_MATERIAL), (SELECT MATERIAL FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) as MATERIAL, obras_ID_OBRA, (SELECT OBRA FROM obras WHERE ID_OBRA = obras_ID_OBRA) as OBRA, sum(CANTIDAD) AS CANTIDAD,(SELECT ABREVIATURA_UNIDAD_MEDIDA FROM materiales WHERE ID_MATERIAL = materiales_ID_MATERIAL) AS UNIDAD_MEDIDA FROM gestion_materiales WHERE obras_ID_OBRA = (SELECT ID_OBRA FROM OBRAS WHERE OBRA = '" + filtroOBRA + "') GROUP BY materiales_ID_MATERIAL, obras_ID_OBRA;";
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setString(1, filtroOBRA);
-            sentencia.setString(2, filtroPROVEEDOR);
-            sentencia.setString(3, filtroMATERIAL);
             ResultSet resultado = sentencia.executeQuery();
 
             while (resultado.next())
             {
-                int ID_GESTION_MATERIAL = resultado.getInt("ID_GESTION_MATERIAL");
                 int ID_OBRA = resultado.getInt("obras_ID_OBRA");
                 String OBRA = resultado.getString("OBRA");
-                int ID_PROVEEDOR = resultado.getInt("proveedor_ID_PROVEEDOR");
-                String PROVEEDOR = resultado.getString("PROVEEDOR");
                 int ID_MATERIAL = resultado.getInt("materiales_ID_MATERIAL");
                 String MATERIAL = resultado.getString("MATERIAL");
-                Double PRECIO = resultado.getDouble("PRECIO");
+                String UNIDAD_MEDIDA = resultado.getString("UNIDAD_MEDIDA");
                 Double CANTIDAD = resultado.getDouble("CANTIDAD");
-                GestionMaterial gm = new GestionMaterial(ID_GESTION_MATERIAL, OBRA, PROVEEDOR, MATERIAL, PRECIO, CANTIDAD);
+                GestionMaterial gm = new GestionMaterial(0, OBRA, MATERIAL, UNIDAD_MEDIDA, null, CANTIDAD);
                 gestiones.add(gm);
             }
             resultado.close();

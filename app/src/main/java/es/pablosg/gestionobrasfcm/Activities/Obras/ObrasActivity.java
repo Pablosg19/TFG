@@ -38,8 +38,8 @@ public class ObrasActivity extends AppCompatActivity {
     public static final String Administrativo = "Administrativo";
     public static final String Albañil = "Albañil";
 
-    public static String CARGO;
-    public static String USER;
+    public String CARGO;
+    public String USER;
 
     private Intent intent;
 
@@ -60,22 +60,16 @@ public class ObrasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_obras);
 
-        intent = getIntent();
-        if(intent != null){
-            USER = intent.getStringExtra(Login.USUARIO_INTRODUCIDO);
-            CARGO = intent.getStringExtra(Login.CARGO_USUARIO);
-            if(USER == null || CARGO == null){
-                USER = intent.getStringExtra(MaterialesActivity.USUARIO_MATERIALES);
-                CARGO = intent.getStringExtra(MaterialesActivity.CARGO_MATERIALES);
-            }
-        }
+        USER = Login.USUARIO_INTRODUCIDO;
+        CARGO = Login.CARGO_USUARIO;
+
         txt_user = (TextView) findViewById(R.id.txt_obras_user);
         bt_obras = (Button) findViewById(R.id.bt_obras_obras);
         bt_materiales = (Button) findViewById(R.id.bt_obras_materiales);
         bt_finanzas = (Button) findViewById(R.id.bt_obras_finanzas);
         edt_nombre = (EditText) findViewById(R.id.edt_filtroObra);
         edt_localizacion = (EditText) findViewById(R.id.edt_filtroLocalizacion);
-        rvObras = (RecyclerView) findViewById(R.id.rv_movimientosFinanzas);
+        rvObras = (RecyclerView) findViewById(R.id.rv_gestionMateriales);
         img_newObra = (ImageView) findViewById(R.id.img_addObra);
 
         if(CARGO.equals(admin) || CARGO.equals(jefe) || CARGO.equals(JefeObra)){

@@ -183,4 +183,83 @@ public class MaterialDB {
             return materiales;
         }
     }
+
+    public static ArrayList<String> getFamilias()
+    {
+        Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
+        if(conexion == null)
+        {
+            Log.i("sql","no conecta la base de datos");
+            return null;
+        }
+        ArrayList<String> familias = new ArrayList<String>();
+        try
+        {
+            Statement sentencia = conexion.createStatement();
+            String ordenSQL = "SELECT distinct(FAMILIA) FROM materiales ORDER BY FAMILIA ASC;";
+            ResultSet resultado = sentencia.executeQuery(ordenSQL);
+            while (resultado.next())
+            {
+                String FAMILIA = resultado.getString("FAMILIA");
+                familias.add(FAMILIA);
+            }
+            resultado.close();
+            sentencia.close();
+            conexion.close();
+            return familias;
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+            Log.i("sql","error sql getFamilias");
+            return familias;
+        }
+    }
+
+    public static ArrayList<String> getMaterial(String familia)
+    {
+        Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
+        if(conexion == null)
+        {
+            Log.i("sql","no conecta la base de datos");
+            return null;
+        }
+        ArrayList<String> materiales = new ArrayList<String>();
+        try
+        {
+            String ordenSQL = "";
+            if (familia.equalsIgnoreCase("Todo")){
+                ordenSQL = "SELECT distinct(MATERIAL) FROM materiales ORDER BY MATERIAL ASC;";
+                Statement sentencia = conexion.createStatement();
+                ResultSet resultado = sentencia.executeQuery(ordenSQL);
+                while (resultado.next())
+                {
+                    String MATERIAL = resultado.getString("MATERIAL");
+                    materiales.add(MATERIAL);
+                }
+                resultado.close();
+                sentencia.close();
+                conexion.close();
+            }
+            else{
+                ordenSQL = "SELECT distinct(MATERIAL) FROM materiales WHERE FAMILIA = ? ORDER BY MATERIAL ASC;";
+                PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
+                sentencia.setString(1, familia);
+                ResultSet resultado = sentencia.executeQuery();
+                while (resultado.next())
+                {
+                    String MATERIAL = resultado.getString("MATERIAL");
+                    materiales.add(MATERIAL);
+                }
+                resultado.close();
+                sentencia.close();
+                conexion.close();
+            }
+            return materiales;
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+            Log.i("sql","error sql getFamilias");
+            return materiales;
+        }
+    }
 }

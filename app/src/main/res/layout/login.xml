@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFE0E0"
     tools:context=".Activities.Login">
 
     <EditText
@@ -14,8 +15,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="90dp"
         android:ems="10"
+        android:hint="@string/usuario"
         android:inputType="textPersonName"
+        android:paddingStart="5sp"
         android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +33,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="90dp"
         android:ems="10"
+        android:hint="@string/constrasena"
         android:inputType="textPassword"
+        android:paddingStart="5sp"
         android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="75dp"
         android:text="@string/errorLogin"
         android:textColor="@color/design_default_color_error"
@@ -64,21 +71,18 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_titulo" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
-    <TextView
-        android:id="@+id/txt_titulo"
+    <ImageView
+        android:id="@+id/imageView6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="150dp"
-        android:text="@string/FCM"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="42sp"
-        android:textStyle="bold"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="105dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_modified" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

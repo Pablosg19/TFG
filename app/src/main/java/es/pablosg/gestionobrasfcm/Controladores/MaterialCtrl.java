@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import es.pablosg.gestionobrasfcm.Clases.Material;
 import es.pablosg.gestionobrasfcm.Tareas.Material.TareaDeleteMaterial;
+import es.pablosg.gestionobrasfcm.Tareas.Material.TareaGetFamilias;
+import es.pablosg.gestionobrasfcm.Tareas.Material.TareaGetMaterial;
 import es.pablosg.gestionobrasfcm.Tareas.Material.TareaGetMateriales;
 import es.pablosg.gestionobrasfcm.Tareas.Material.TareaGetMaterialesFiltro;
 import es.pablosg.gestionobrasfcm.Tareas.Material.TareaNewMaterial;
@@ -123,6 +125,52 @@ public class MaterialCtrl {
         es.submit(tarea);
         try {
             materiales = (ArrayList<Material>) tarea.get();
+            es.shutdown();
+            try {
+                if (!es.awaitTermination(2000, TimeUnit.MILLISECONDS)){
+                    es.shutdownNow();
+                }
+            }  catch (InterruptedException e) {
+                es.shutdownNow();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return materiales;
+    }
+
+    public static ArrayList<String> getFamilias(){
+        ArrayList<String> familias = null;
+        FutureTask tarea = new FutureTask(new TareaGetFamilias());
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        es.submit(tarea);
+        try {
+            familias = (ArrayList<String>) tarea.get();
+            es.shutdown();
+            try {
+                if (!es.awaitTermination(2000, TimeUnit.MILLISECONDS)){
+                    es.shutdownNow();
+                }
+            }  catch (InterruptedException e) {
+                es.shutdownNow();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return familias;
+    }
+
+    public static ArrayList<String> getMaterial(String familia){
+        ArrayList<String> materiales = null;
+        FutureTask tarea = new FutureTask(new TareaGetMaterial(familia));
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        es.submit(tarea);
+        try {
+            materiales = (ArrayList<String>) tarea.get();
             es.shutdown();
             try {
                 if (!es.awaitTermination(2000, TimeUnit.MILLISECONDS)){

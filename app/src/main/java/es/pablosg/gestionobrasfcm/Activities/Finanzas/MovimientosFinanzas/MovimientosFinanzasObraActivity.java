@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,12 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import es.pablosg.gestionobrasfcm.Activities.Finanzas.FinanzasViewHolder;
-import es.pablosg.gestionobrasfcm.Activities.Materiales.ListaMaterialesAdapter;
-import es.pablosg.gestionobrasfcm.Activities.Materiales.MaterialesViewHolder;
 import es.pablosg.gestionobrasfcm.Clases.FinanzaObra;
-import es.pablosg.gestionobrasfcm.Clases.Material;
 import es.pablosg.gestionobrasfcm.Clases.MovimientoFinanza;
-import es.pablosg.gestionobrasfcm.Controladores.FinanzaObraCtrl;
 import es.pablosg.gestionobrasfcm.Controladores.MovimientoFinanzaCtrl;
 import es.pablosg.gestionobrasfcm.R;
 
@@ -47,7 +42,7 @@ public class MovimientosFinanzasObraActivity extends AppCompatActivity implement
         txt_obra = (TextView) findViewById(R.id.txt_movimientoFinanza_obra);
         txt_user = (TextView) findViewById(R.id.txt_movimientoFinanza_user);
         sp_ordenar = (Spinner) findViewById(R.id.sp_movimientoFinanza_ordenar);
-        rv_movimientosFinanzas = (RecyclerView) findViewById(R.id.rv_movimientosFinanzas);
+        rv_movimientosFinanzas = (RecyclerView) findViewById(R.id.rv_gestionMateriales);
 
         txt_obra.setText(fo.getOBRA());
 
