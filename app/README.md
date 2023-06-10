@@ -1,0 +1,5 @@
+En el inicio de la aplicación se requerirá una autenticación de credenciales.
+Una vez comprobado y aceptado las credenciales se mostrara la pantalla principal 'Obras'. En esta pantalla podemos ver todas las obras de la empresa, ver el detalle de cada una, editar la informacion y añadir una nueva obra.
+Desde la pantalla 'Obras' podemos movernos a las pantallas 'Materiales' y 'Finanzas'.
+En la pantalla 'Materiales' podemos ver todos los materiales registrados en la base de datos de la empresa, ver el detalle de cada uno y editar la información relacionada. También se puede añadir un material nuevo.
+En la pantalla 'Finanzas' podemos ver todas las finanzas totales por cada obra. La finanza solo se mostrara una vez la obra haya sido terminada y vendida. En esta pantalla podemos ver las finanzas y su detalle. En el detalle se muestran todos los movimientos económicos de la obra, una vez terminada la obra se calcula el beneficio.
