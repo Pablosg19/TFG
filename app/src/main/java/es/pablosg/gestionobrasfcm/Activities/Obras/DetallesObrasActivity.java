@@ -99,6 +99,7 @@ public class DetallesObrasActivity extends AppCompatActivity {
         edt_localizacion.setText(o.getLOCALIZACION());
         edt_precioTerreno.setText(ObrasActivity.format.format(o.getPRECIO_TERRENO()));
         if (o.isTERMINAR()){
+            img_gestionObras.setVisibility(View.INVISIBLE);
             radioGroupTerminar.check(R.id.rb_detalle_terminada_si);
         }
         else {
@@ -222,6 +223,9 @@ public class DetallesObrasActivity extends AppCompatActivity {
             updateObra.setTitle("¿Quieres actualizar los datos de " + obra + "?");
             boolean finalTerminada = terminada;
             boolean finalVendida = vendida;
+            if (finalTerminada){
+                img_gestionObras.setVisibility(View.INVISIBLE);
+            }
             if(finalVendida){
                 if (precioVenta.isEmpty()){
                     bt_aceptarCambios.setError("Debes rellenar todos los campos. Si la obra ha sido vendida indica el precio de venta.");

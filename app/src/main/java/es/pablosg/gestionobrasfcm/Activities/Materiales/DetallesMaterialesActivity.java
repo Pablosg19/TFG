@@ -76,6 +76,7 @@ public class DetallesMaterialesActivity extends AppCompatActivity {
     }
 
     public void editarMaterial(View view) {
+        bt_aceptarCambios.setError(null);
         img_editar.setVisibility(View.INVISIBLE);
         bt_aceptarCambios.setVisibility(View.VISIBLE);
         bt_cancelarCambios.setVisibility(View.VISIBLE);
@@ -114,40 +115,40 @@ public class DetallesMaterialesActivity extends AppCompatActivity {
         if(material.isEmpty() || unidadMedida.isEmpty() || abreviatura.isEmpty()){
             bt_aceptarCambios.setError("Debes rellenar los campos requeridos");
         }
-
-        AlertDialog.Builder updateMaterial = new AlertDialog.Builder(this);
-        updateMaterial.setTitle("¿Quieres actualizar los datos de " + material + "?");
-        updateMaterial.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                m = new Material(0, material, unidadMedida, abreviatura, familia);
-                boolean updateMaterialOK = MaterialCtrl.updateMaterial(m, material);
-                mostrarMensaje(updateMaterialOK, material);
-            }
-        });
-        updateMaterial.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                edt_unidadMedida.setText(m.getUNIDAD_MEDIDA());
-                edt_abreviatura.setText(m.getABREVIATURA_UNIDAD_MEDIDA());
-                if(m.getFAMILIA().equals("")){
-                    edt_familia.setText("Sin familia asignada");
+        else{
+            AlertDialog.Builder updateMaterial = new AlertDialog.Builder(this);
+            updateMaterial.setTitle("¿Quieres actualizar los datos de " + material + "?");
+            updateMaterial.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    m = new Material(0, material, unidadMedida, abreviatura, familia);
+                    boolean updateMaterialOK = MaterialCtrl.updateMaterial(m, material);
+                    mostrarMensaje(updateMaterialOK, material);
                 }
-                else{
-                    edt_familia.setText(m.getFAMILIA());
+            });
+            updateMaterial.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    edt_unidadMedida.setText(m.getUNIDAD_MEDIDA());
+                    edt_abreviatura.setText(m.getABREVIATURA_UNIDAD_MEDIDA());
+                    if(m.getFAMILIA().equals("")){
+                        edt_familia.setText("Sin familia asignada");
+                    }
+                    else{
+                        edt_familia.setText(m.getFAMILIA());
+                    }
                 }
-            }
-        });
-        updateMaterial.show();
+            });
+            updateMaterial.show();
 
-        edt_unidadMedida.setEnabled(false);
-        edt_abreviatura.setEnabled(false);
-        edt_familia.setEnabled(false);
+            edt_unidadMedida.setEnabled(false);
+            edt_abreviatura.setEnabled(false);
+            edt_familia.setEnabled(false);
 
-        img_editar.setVisibility(View.VISIBLE);
-        bt_aceptarCambios.setVisibility(View.INVISIBLE);
-        bt_cancelarCambios.setVisibility(View.INVISIBLE);
-
+            img_editar.setVisibility(View.VISIBLE);
+            bt_aceptarCambios.setVisibility(View.INVISIBLE);
+            bt_cancelarCambios.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void mostrarMensaje(boolean updateOK, String material){
