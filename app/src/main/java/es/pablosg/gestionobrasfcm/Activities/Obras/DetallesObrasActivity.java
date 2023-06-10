@@ -119,33 +119,44 @@ public class DetallesObrasActivity extends AppCompatActivity {
     }
 
     public void editarObra(View view) {
+        bt_aceptarCambios.setError(null);
+
         img_gestionObras.setVisibility(View.INVISIBLE);
         img_editar.setVisibility(View.INVISIBLE);
         bt_aceptarCambios.setVisibility(View.VISIBLE);
         bt_cancelarCambios.setVisibility(View.VISIBLE);
 
         String cargo = Login.CARGO_USUARIO;
-        if(cargo.equalsIgnoreCase(ObrasActivity.jefe) || cargo.equalsIgnoreCase(ObrasActivity.JefeObra)){
-            edt_localizacion.setEnabled(true);
-            edt_direccion.setEnabled(true);
-            edt_precioTerreno.setEnabled(true);
-            rb_terminada_no.setEnabled(true);
-            rb_terminada_si.setEnabled(true);
+        if(o.isTERMINAR()){
+            if (cargo.equalsIgnoreCase(ObrasActivity.AgenteInmobiliario) || cargo.equalsIgnoreCase(ObrasActivity.admin)){
+                rb_vendida_si.setEnabled(true);
+                rb_vendida_no.setEnabled(true);
+                edt_precioVenta.setEnabled(true);
+            }
         }
-        else if (cargo.equalsIgnoreCase(ObrasActivity.AgenteInmobiliario)){
-            rb_vendida_si.setEnabled(true);
-            rb_vendida_no.setEnabled(true);
-            edt_precioVenta.setEnabled(true);
-        }
-        else if (cargo.equalsIgnoreCase(ObrasActivity.admin)){
-            edt_localizacion.setEnabled(true);
-            edt_direccion.setEnabled(true);
-            edt_precioTerreno.setEnabled(true);
-            rb_terminada_no.setEnabled(true);
-            rb_terminada_si.setEnabled(true);
-            rb_vendida_si.setEnabled(true);
-            rb_vendida_no.setEnabled(true);
-            edt_precioVenta.setEnabled(true);
+        else{
+            if(cargo.equalsIgnoreCase(ObrasActivity.jefe) || cargo.equalsIgnoreCase(ObrasActivity.JefeObra)){
+                edt_localizacion.setEnabled(true);
+                edt_direccion.setEnabled(true);
+                edt_precioTerreno.setEnabled(true);
+                rb_terminada_no.setEnabled(true);
+                rb_terminada_si.setEnabled(true);
+            }
+            else if (cargo.equalsIgnoreCase(ObrasActivity.AgenteInmobiliario)){
+                rb_vendida_si.setEnabled(true);
+                rb_vendida_no.setEnabled(true);
+                edt_precioVenta.setEnabled(true);
+            }
+            else if (cargo.equalsIgnoreCase(ObrasActivity.admin)){
+                edt_localizacion.setEnabled(true);
+                edt_direccion.setEnabled(true);
+                edt_precioTerreno.setEnabled(true);
+                rb_terminada_no.setEnabled(true);
+                rb_terminada_si.setEnabled(true);
+                rb_vendida_si.setEnabled(true);
+                rb_vendida_no.setEnabled(true);
+                edt_precioVenta.setEnabled(true);
+            }
         }
     }
 
@@ -190,6 +201,7 @@ public class DetallesObrasActivity extends AppCompatActivity {
         String direccion = String.valueOf(edt_direccion.getText());
         String localizacion = String.valueOf(edt_localizacion.getText());
         String precioTerreno = String.valueOf(edt_precioTerreno.getText());
+        String precioVenta = String.valueOf(edt_precioVenta.getText());
         boolean terminada = false;
         if(rb_terminada_si.isChecked()){
             terminada = true;
@@ -198,93 +210,188 @@ public class DetallesObrasActivity extends AppCompatActivity {
         if(rb_vendida_si.isChecked()){
             vendida = true;
         }
-        ObrasActivity.format.format(Double.valueOf(precioTerreno));
 
-        AlertDialog.Builder updateObra = new AlertDialog.Builder(this);
-        updateObra.setTitle("¿Quieres actualizar los datos de " + obra + "?");
-        boolean finalTerminada = terminada;
-        boolean finalVendida = vendida;
-        updateObra.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                o = new Obra(0, obra, direccion, localizacion, Double.valueOf(precioTerreno) , finalTerminada, finalVendida);
-                boolean updateObraOK = ObraCtrl.updateObra(o, obra);
-                if(updateObraOK){
-                    int movimiento = 0;
-                    Double dinero = precioTerrenoAnterior - Double.valueOf(precioTerreno);
-                    if(Double.valueOf(precioTerreno) > precioTerrenoAnterior){
-                        movimiento = 1;
-                        dinero = Double.valueOf(precioTerreno) - precioTerrenoAnterior;
-                        MovimientoFinanza mf = new MovimientoFinanza(0,obra,movimiento,dinero);
-                        MovimientoFinanzaCtrl.newMovimientoFinanza(mf);
-                    } else if (dinero == 0) {
-                        // No hacemos movimientoFinanza
-                    }
-                    else{
-                        MovimientoFinanza mf = new MovimientoFinanza(0,obra,movimiento,dinero);
-                        MovimientoFinanzaCtrl.newMovimientoFinanza(mf);
-                    }
+        // Comprobacion de que los campos estan rellenos
+        if(obra.isEmpty() || direccion.isEmpty() || localizacion.isEmpty() || precioTerreno.isEmpty()){
+                bt_aceptarCambios.setError("Debes rellenar todos los campos");
+        }
+        else{
+            ObrasActivity.format.format(Double.valueOf(precioTerreno));
 
-                    if (finalTerminada && finalVendida) {
-                        String precioVenta = String.valueOf(edt_precioVenta.getText());
-                        Double venta = Double.valueOf(precioVenta);
-                        MovimientoFinanza mf2 = new MovimientoFinanza(0, obra, 0, venta);
-                        boolean newMovimientoVenderOK = MovimientoFinanzaCtrl.newMovimientoFinanza(mf2);
-                        if (newMovimientoVenderOK) {
-                            boolean newFinanzaOK = FinanzaObraCtrl.newFinanzaObra(obra);
-                            if (newFinanzaOK) {
-                                mostrarMensaje(newFinanzaOK, obra);
-                            } else {
-                                MovimientoFinanza mf3 = new MovimientoFinanza(0, obra, 1, venta); // Se crea en negativo para igualarlo a 0 como no se han creado bien todos los booleans
-                                MovimientoFinanzaCtrl.newMovimientoFinanza(mf3);
-                                mostrarMensaje(newFinanzaOK, obra);
-                            }
-                        }
-                    }
-                    edt_precioVenta.setText(null);
+            AlertDialog.Builder updateObra = new AlertDialog.Builder(this);
+            updateObra.setTitle("¿Quieres actualizar los datos de " + obra + "?");
+            boolean finalTerminada = terminada;
+            boolean finalVendida = vendida;
+            if(finalVendida){
+                if (precioVenta.isEmpty()){
+                    bt_aceptarCambios.setError("Debes rellenar todos los campos. Si la obra ha sido vendida indica el precio de venta.");
                 }
                 else{
-                    mostrarMensaje(updateObraOK, obra);
-                    edt_precioVenta.setText(null);
+                    updateObra.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            o = new Obra(0, obra, direccion, localizacion, Double.valueOf(precioTerreno) , finalTerminada, finalVendida);
+                            boolean updateObraOK = ObraCtrl.updateObra(o, obra);
+                            if(updateObraOK){
+                                int movimiento = 0;
+                                Double dinero = precioTerrenoAnterior - Double.valueOf(precioTerreno);
+                                if(Double.valueOf(precioTerreno) > precioTerrenoAnterior){
+                                    movimiento = 1;
+                                    dinero = Double.valueOf(precioTerreno) - precioTerrenoAnterior;
+                                    MovimientoFinanza mf = new MovimientoFinanza(0,obra,movimiento,dinero);
+                                    MovimientoFinanzaCtrl.newMovimientoFinanza(mf);
+                                } else if (dinero == 0) {
+                                    // No hacemos movimientoFinanza
+                                }
+                                else{
+                                    MovimientoFinanza mf = new MovimientoFinanza(0,obra,movimiento,dinero);
+                                    MovimientoFinanzaCtrl.newMovimientoFinanza(mf);
+                                }
+
+                                if (finalTerminada && finalVendida) {
+                                    Double venta = Double.valueOf(precioVenta);
+                                    MovimientoFinanza mf2 = new MovimientoFinanza(0, obra, 0, venta);
+                                    boolean newMovimientoVenderOK = MovimientoFinanzaCtrl.newMovimientoFinanza(mf2);
+                                    if (newMovimientoVenderOK) {
+                                        boolean newFinanzaOK = FinanzaObraCtrl.newFinanzaObra(obra);
+                                        if (newFinanzaOK) {
+                                            mostrarMensaje(newFinanzaOK, obra);
+                                        } else {
+                                            MovimientoFinanza mf3 = new MovimientoFinanza(0, obra, 1, venta); // Se crea en negativo para igualarlo a 0 como no se han creado bien todos los booleans
+                                            MovimientoFinanzaCtrl.newMovimientoFinanza(mf3);
+                                            mostrarMensaje(newFinanzaOK, obra);
+                                        }
+                                    }
+                                }
+                                edt_precioVenta.setText(null);
+                            }
+                            else{
+                                mostrarMensaje(updateObraOK, obra);
+                                edt_precioVenta.setText(null);
+                            }
+                        }
+                    });
+                    updateObra.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            txt_Obra.setText(o.getOBRA());
+                            edt_direccion.setText(o.getDIRECCION());
+                            edt_localizacion.setText(o.getLOCALIZACION());
+                            edt_precioTerreno.setText(ObrasActivity.format.format(o.getPRECIO_TERRENO()));
+                            if (o.isTERMINAR()){
+                                radioGroupTerminar.check(R.id.rb_detalle_terminada_si);
+                            }
+                            else {
+                                radioGroupTerminar.check(R.id.rb_detalle_terminada_no);
+                            }
+                            if(o.isVENDIDA()){
+                                radioGroupVendida.check(R.id.rb_detalle_vendida_si);
+                            }
+                            else {
+                                radioGroupVendida.check(R.id.rb_detalle_vendida_no);
+                            }
+                        }
+                    });
+                    updateObra.show();
+
+                    img_gestionObras.setVisibility(View.VISIBLE);
+                    img_editar.setVisibility(View.VISIBLE);
+                    bt_aceptarCambios.setVisibility(View.INVISIBLE);
+                    bt_cancelarCambios.setVisibility(View.INVISIBLE);
+
+                    edt_localizacion.setEnabled(false);
+                    edt_direccion.setEnabled(false);
+                    edt_precioTerreno.setEnabled(false);
+                    rb_terminada_no.setEnabled(false);
+                    rb_terminada_si.setEnabled(false);
+                    rb_vendida_si.setEnabled(false);
+                    rb_vendida_no.setEnabled(false);
+                    edt_precioVenta.setEnabled(false);
                 }
             }
-        });
-        updateObra.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                txt_Obra.setText(o.getOBRA());
-                edt_direccion.setText(o.getDIRECCION());
-                edt_localizacion.setText(o.getLOCALIZACION());
-                edt_precioTerreno.setText(ObrasActivity.format.format(o.getPRECIO_TERRENO()));
-                if (o.isTERMINAR()){
-                    radioGroupTerminar.check(R.id.rb_detalle_terminada_si);
-                }
-                else {
-                    radioGroupTerminar.check(R.id.rb_detalle_terminada_no);
-                }
-                if(o.isVENDIDA()){
-                    radioGroupVendida.check(R.id.rb_detalle_vendida_si);
-                }
-                else {
-                    radioGroupVendida.check(R.id.rb_detalle_vendida_no);
-                }
+            else{
+                updateObra.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        o = new Obra(0, obra, direccion, localizacion, Double.valueOf(precioTerreno) , finalTerminada, finalVendida);
+                        boolean updateObraOK = ObraCtrl.updateObra(o, obra);
+                        if(updateObraOK){
+                            int movimiento = 0;
+                            Double dinero = precioTerrenoAnterior - Double.valueOf(precioTerreno);
+                            if(Double.valueOf(precioTerreno) > precioTerrenoAnterior){
+                                movimiento = 1;
+                                dinero = Double.valueOf(precioTerreno) - precioTerrenoAnterior;
+                                MovimientoFinanza mf = new MovimientoFinanza(0,obra,movimiento,dinero);
+                                MovimientoFinanzaCtrl.newMovimientoFinanza(mf);
+                            } else if (dinero == 0) {
+                                // No hacemos movimientoFinanza
+                            }
+                            else{
+                                MovimientoFinanza mf = new MovimientoFinanza(0,obra,movimiento,dinero);
+                                MovimientoFinanzaCtrl.newMovimientoFinanza(mf);
+                            }
+
+                            if (finalTerminada && finalVendida) {
+                                Double venta = Double.valueOf(precioVenta);
+                                MovimientoFinanza mf2 = new MovimientoFinanza(0, obra, 0, venta);
+                                boolean newMovimientoVenderOK = MovimientoFinanzaCtrl.newMovimientoFinanza(mf2);
+                                if (newMovimientoVenderOK) {
+                                    boolean newFinanzaOK = FinanzaObraCtrl.newFinanzaObra(obra);
+                                    if (newFinanzaOK) {
+                                        mostrarMensaje(newFinanzaOK, obra);
+                                    } else {
+                                        MovimientoFinanza mf3 = new MovimientoFinanza(0, obra, 1, venta); // Se crea en negativo para igualarlo a 0 como no se han creado bien todos los booleans
+                                        MovimientoFinanzaCtrl.newMovimientoFinanza(mf3);
+                                        mostrarMensaje(newFinanzaOK, obra);
+                                    }
+                                }
+                            }
+                            edt_precioVenta.setText(null);
+                        }
+                        else{
+                            mostrarMensaje(updateObraOK, obra);
+                            edt_precioVenta.setText(null);
+                        }
+                    }
+                });
+                updateObra.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        txt_Obra.setText(o.getOBRA());
+                        edt_direccion.setText(o.getDIRECCION());
+                        edt_localizacion.setText(o.getLOCALIZACION());
+                        edt_precioTerreno.setText(ObrasActivity.format.format(o.getPRECIO_TERRENO()));
+                        if (o.isTERMINAR()){
+                            radioGroupTerminar.check(R.id.rb_detalle_terminada_si);
+                        }
+                        else {
+                            radioGroupTerminar.check(R.id.rb_detalle_terminada_no);
+                        }
+                        if(o.isVENDIDA()){
+                            radioGroupVendida.check(R.id.rb_detalle_vendida_si);
+                        }
+                        else {
+                            radioGroupVendida.check(R.id.rb_detalle_vendida_no);
+                        }
+                    }
+                });
+                updateObra.show();
+
+                img_gestionObras.setVisibility(View.VISIBLE);
+                img_editar.setVisibility(View.VISIBLE);
+                bt_aceptarCambios.setVisibility(View.INVISIBLE);
+                bt_cancelarCambios.setVisibility(View.INVISIBLE);
+
+                edt_localizacion.setEnabled(false);
+                edt_direccion.setEnabled(false);
+                edt_precioTerreno.setEnabled(false);
+                rb_terminada_no.setEnabled(false);
+                rb_terminada_si.setEnabled(false);
+                rb_vendida_si.setEnabled(false);
+                rb_vendida_no.setEnabled(false);
+                edt_precioVenta.setEnabled(false);
             }
-        });
-        updateObra.show();
-
-        img_gestionObras.setVisibility(View.VISIBLE);
-        img_editar.setVisibility(View.VISIBLE);
-        bt_aceptarCambios.setVisibility(View.INVISIBLE);
-        bt_cancelarCambios.setVisibility(View.INVISIBLE);
-
-        edt_localizacion.setEnabled(false);
-        edt_direccion.setEnabled(false);
-        edt_precioTerreno.setEnabled(false);
-        rb_terminada_no.setEnabled(false);
-        rb_terminada_si.setEnabled(false);
-        rb_vendida_si.setEnabled(false);
-        rb_vendida_no.setEnabled(false);
-        edt_precioVenta.setEnabled(false);
+        }
     }
 
     public void mostrarMensaje(boolean updateOK, String obra){

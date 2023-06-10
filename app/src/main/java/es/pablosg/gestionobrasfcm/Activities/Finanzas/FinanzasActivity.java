@@ -102,14 +102,42 @@ public class FinanzasActivity extends AppCompatActivity {
     }
 
     public void goToMateriales(View view){
-        Intent intent = new Intent(this, MaterialesActivity.class);
-        startActivity(intent);
+        if(Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.Administrativo)){
+            AlertDialog.Builder permisos = new AlertDialog.Builder(this);
+            permisos.setTitle("Error");
+            permisos.setMessage("Este usuario no dispone de los permisos requeridos para acceder a Materiales");
+            permisos.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            permisos.show();
+        }
+        else {
+            Intent intent = new Intent(this, MaterialesActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void goToObras(View view){
-        Intent intent = new Intent(this, ObrasActivity.class);
-        intent.putExtra(USUARIO_FINANZAS,Login.USUARIO_INTRODUCIDO);
-        intent.putExtra(CARGO_FINANZAS, Login.CARGO_USUARIO);
-        startActivity(intent);
+        if(Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.Administrativo)){
+            AlertDialog.Builder permisos = new AlertDialog.Builder(this);
+            permisos.setTitle("Error");
+            permisos.setMessage("Este usuario no dispone de los permisos requeridos para acceder a Obras");
+            permisos.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            permisos.show();
+        }
+        else {
+            Intent intent = new Intent(this, ObrasActivity.class);
+            intent.putExtra(USUARIO_FINANZAS,Login.USUARIO_INTRODUCIDO);
+            intent.putExtra(CARGO_FINANZAS, Login.CARGO_USUARIO);
+            startActivity(intent);
+        }
     }
 }

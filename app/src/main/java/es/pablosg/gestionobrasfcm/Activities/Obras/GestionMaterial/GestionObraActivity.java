@@ -46,7 +46,7 @@ public class GestionObraActivity extends AppCompatActivity {
 
         txt_obra.setText(DetallesObrasActivity.NOMBRE_OBRA);
 
-        if(Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.JefeObra) || Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.admin)){
+        if(Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.JefeObra) || Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.admin) || Login.CARGO_USUARIO.equalsIgnoreCase(ObrasActivity.jefe)){
             img_addGestionMaterial.setVisibility(View.VISIBLE);
         }
         else{

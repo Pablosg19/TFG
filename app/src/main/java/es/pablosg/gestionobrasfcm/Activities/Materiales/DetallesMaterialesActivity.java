@@ -111,6 +111,10 @@ public class DetallesMaterialesActivity extends AppCompatActivity {
         String abreviatura = String.valueOf(edt_abreviatura.getText());
         String familia = String.valueOf(edt_familia.getText());
 
+        if(material.isEmpty() || unidadMedida.isEmpty() || abreviatura.isEmpty()){
+            bt_aceptarCambios.setError("Debes rellenar los campos requeridos");
+        }
+
         AlertDialog.Builder updateMaterial = new AlertDialog.Builder(this);
         updateMaterial.setTitle("¿Quieres actualizar los datos de " + material + "?");
         updateMaterial.setPositiveButton("Si", new DialogInterface.OnClickListener() {
